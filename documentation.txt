@@ -1,0 +1,31 @@
+
+								Sunday 16th July, 2023
+								-----------------------
+The user model should have the following fields:
+- name 
+	I'll use a separate field  instead of the default first_name and last_name fields 
+- email : 
+	This will be used as the identification for users, apart from the passkey, 
+	so this has to be unique for all users. I'll use the default 'email' field.
+- passkey:
+	This is an auto generated string that the user would use to login to their account
+	the credentials for this passkey would be handed to the user, as account creation
+	would be handled by the school's technical dept.
+- is_student and is_educator:
+	Boolean flags as to whether the user account is for a student or a teacher.
+
+For the custom user backend I created, the backend checks for the email and 
+the auto generated passkey as the credentials before logging in a user. Admin accounts
+can alternatively use their password to login or the auto generated passkey.
+
+
+
+
+
+
+
+								Monday 17th July, 2023
+								-----------------------
+Because the username field is required in django authentication, I'll give it an outward
+name of email and add an email validator. And i'll also remove the default email field
+from the required fields.
