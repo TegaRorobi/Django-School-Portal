@@ -1,6 +1,6 @@
-
-								Sunday 16th July, 2023
-								-----------------------
+-----------------------
+Sunday 16th July, 2023
+-----------------------
 The user model should have the following fields:
 - name 
 	I'll use a separate field  instead of the default first_name and last_name fields 
@@ -23,9 +23,9 @@ can alternatively use their password to login or the auto generated passkey.
 
 
 
-
-								Monday 17th July, 2023
-								-----------------------
+-----------------------
+Monday 17th July, 2023
+-----------------------
 Because the username field is required in django authentication, I'll give it an outward
 name of email and add an email validator. And i'll also remove the default email field
 from the required fields.
