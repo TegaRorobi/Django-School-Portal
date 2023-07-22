@@ -8,7 +8,7 @@ UserModel = get_user_model()
 @admin.register(UserModel)
 class UserAdmin(admin.ModelAdmin):
 	model = UserModel
-	list_display = ('username', 'is_superuser', 'account_type', 'passkey')
+	list_display = ('name', 'gender', 'username', 'account_type', 'is_superuser', 'passkey')
 
 	@admin.action(description="Change selected users' account type to 'Admin'")
 	def update_account_admin(self, request, queryset):

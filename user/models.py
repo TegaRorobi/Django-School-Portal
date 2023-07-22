@@ -29,10 +29,17 @@ class User(AbstractUser):
 		("educator", "Educator")
 	]
 
-	username = models.CharField(_('Email'), max_length=150, unique=True, validators=[EmailValidator])
+	GENDER_CHOICES = [
+		('m', 'Male'),
+		('f', 'Female')
+	]
+
 	name = models.CharField(max_length=200, null=True, blank=False)
-	passkey = models.CharField(max_length=13, unique=True, blank=True)
+	username = models.CharField(_('Email'), max_length=150, unique=True, validators=[EmailValidator])
+	gender = models.CharField(max_length=1, null=True, choices=GENDER_CHOICES)
 	account_type = models.CharField(max_length=8, choices=ACCOUNT_TYPE_CHOICES, null=True)
+	dob = models.DateField(_('Date of Birth'), null=True)
+	passkey = models.CharField(max_length=13, unique=True, blank=True)
 
 	REQUIRED_FIELDS = []
 	USERNAME_FIELD = 'username'
