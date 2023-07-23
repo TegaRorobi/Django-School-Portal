@@ -33,3 +33,19 @@ class Grade(models.Model):
 	def __str__(self):
 		return self.label
 
+
+
+class TeacherProfile(models.Model):
+
+	user = models.OneToOneField(UserModel, related_name='teacher_profile', on_delete=models.CASCADE)
+	image = models.ImageField(upload_to='images/teacher_profile_images')
+	grades = models.ManyToManyField(Grade, related_name='teachers')
+
+	# timestamps
+	date_created = models.DateTimeField(auto_now_add=True)
+	last_modified = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.user.name
+
+

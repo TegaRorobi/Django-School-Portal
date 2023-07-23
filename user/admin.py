@@ -9,6 +9,7 @@ UserModel = get_user_model()
 class UserAdmin(admin.ModelAdmin):
 	model = UserModel
 	list_display = ('name', 'gender', 'username', 'account_type', 'is_superuser', 'passkey')
+	exclude = ('password', 'first_name', 'last_name', 'email', 'groups', 'user_permissions', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login')
 
 	@admin.action(description="Change selected users' account type to 'Admin'")
 	def update_account_admin(self, request, queryset):
