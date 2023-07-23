@@ -13,20 +13,6 @@ class User(AbstractUser):
 		ret = (str(random.randint(0, 9)) for _ in range(rand_len))
 		return const + ''.join(ret)
 
-	def save(self, *args, **kwargs):
-		
-		if not self.passkey:
-			while True:
-				try:
-					self.passkey = self.generate_passkey("IHEMCNPS-", 4)
-					super().save(*args, **kwargs)
-					break
-				except IntegrityError:
-					pass
-		else:
-			super().save(*args, **kwargs)
-
-
 	class Meta:
 		unique_together = ['username', 'passkey']
 
@@ -59,6 +45,19 @@ class User(AbstractUser):
 
 	REQUIRED_FIELDS = []
 	USERNAME_FIELD = 'username'
+
+	
+	def save(self, *args, **kwargs):
+		if not self.passkey:
+			while True:
+				try:
+					self.passkey = self.generate_passkey("IHEMCNPS-", 4)
+					super().save(*args, **kwargs)
+					break
+				except IntegrityError:
+					pass
+		else:
+			super().save(*args, **kwargs)
 
 	def __str__(self):
 		return self.name if self.name else self.username

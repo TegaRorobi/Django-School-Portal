@@ -54,7 +54,7 @@ class TeacherProfile(models.Model):
 			super().save(*args, **kwargs)
 
 	def __str__(self):
-		return self.user.name if self.user.name else self.user.username
+		return str(self.user)
 
 
 
@@ -84,5 +84,5 @@ class StudentProfile(models.Model):
 			super().save(*args, **kwargs)
 
 	def __str__(self):
-		return self.user.name if self.user.name else self.user.username
+		return str(self.user)
 

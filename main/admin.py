@@ -16,7 +16,7 @@ class TeacherProfileAdmin(admin.ModelAdmin):
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
 	model = StudentProfile
-	list_display = ['user', 'image', 'grade', 'subjects_']
+	list_display = ['user', 'image', 'grade']
 
 	@admin.display()
 	def subjects_(self, obj):
