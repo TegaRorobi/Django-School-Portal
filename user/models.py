@@ -2,7 +2,9 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext as _
 from django.db import models, IntegrityError
 from django.core.validators import EmailValidator, RegexValidator
+from django.conf import settings
 import random
+
 
 
 class User(AbstractUser):
@@ -12,6 +14,7 @@ class User(AbstractUser):
 		return const + ''.join(ret)
 
 	def save(self, *args, **kwargs):
+		
 		if not self.passkey:
 			while True:
 				try:

@@ -38,14 +38,51 @@ class Grade(models.Model):
 class TeacherProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='teacher_profile', on_delete=models.CASCADE)
-	image = models.ImageField(upload_to='images/teacher_profile_images')
+	image = models.ImageField(upload_to='images/teacher_profiles')
 	grades = models.ManyToManyField(Grade, related_name='teachers')
 
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
 	last_modified = models.DateTimeField(auto_now=True)
 
-	def __str__(self):
-		return self.user.name
+	def save(self, *args, **kwargs):
+		try:
+			if self.user.student_profile:
+				# log an error message
+				return
+		except:
+			super().save(*args, **kwargs)
 
+	def __str__(self):
+		return self.user.name if self.user.name else self.user.username
+
+
+
+class StudentProfile(models.Model):
+
+	user = models.OneToOneField(UserModel, related_name='student_profile', on_delete=models.CASCADE)
+	image = models.ImageField(upload_to='images/student_profiles')
+	grade = models.ForeignKey(Grade, related_name='students', on_delete=models.PROTECT)
+	subjects = models.ManyToManyField(Subject, related_name='offering_students')
+
+	# timestamps
+	date_created = models.DateTimeField(auto_now_add=True)
+	last_modified = models.DateTimeField(auto_now=True)
+
+	def save(self, *args, **kwargs):
+		try:
+			if self.user.teacher_profile:
+				# log an error message
+				return
+		except:
+			# making sure all selected subjects are offered by the selected grade.
+			hashset = set([subject.label for subject in self.grade.subjects.all()])
+			for subject in self.subjects.all():
+				if subject.label not in hashset:
+					# log an error message
+					return
+			super().save(*args, **kwargs)
+
+	def __str__(self):
+		return self.user.name if self.user.name else self.user.username
 
