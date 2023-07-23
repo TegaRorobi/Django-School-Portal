@@ -46,8 +46,9 @@ class User(AbstractUser):
 	REQUIRED_FIELDS = []
 	USERNAME_FIELD = 'username'
 
-	
+
 	def save(self, *args, **kwargs):
+		self.set_password(self.password)
 		if not self.passkey:
 			while True:
 				try:

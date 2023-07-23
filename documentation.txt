@@ -27,5 +27,31 @@ can alternatively use their password to login or the auto generated passkey.
 Monday 17th July, 2023
 -----------------------
 Because the username field is required in django authentication, I'll give it an outward
-name of email and add an email validator. And i'll also remove the default email field
+name of Email and add an email validator. And I'll also remove the default email field
 from the required fields.
+
+
+
+-----------------------
+Sunday 23rd July, 2023
+-----------------------
+As of now, I have implemented a TeacherProfile model which links to a user object
+via a OneToOneField. I have also created a StudentProfile one. This way, I can add teacher 
+or student specific fields to these models which extend the base user model.
+I have also intercepted the save method on the TeacherProfile model
+so that it checks if the user object is currently linked to a Student profile object and 
+then I do not make the relationship. Same situation is checked in the reverse when trying 
+to link a user object to a StudentProfile.
+
+In the future, I'll either log an error message or implement a sort of notification if 
+there's any attempt to link a user object to both StudentProfile and TeacherProfile.
+
+A master password has also been implemented that can unlock any user account as the 
+custom authentication backend checks for this special password which is kept in the
+settings and further into a .env file loaded by python-decouple.
+
+The media settings have been configured in the settings, and the urls have been configured in 
+the urls.py file in the project folder.
+
+And I also made sure the password (entered as clear text) is hashed in the save method
+of the custom user model to ensure passwords are never saved as clear text.
