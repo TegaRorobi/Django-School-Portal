@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
 import datetime
 
@@ -26,7 +27,6 @@ class Grade(models.Model):
 		('Primary 4', 'Primary 4'),
 		('Primary 5', 'Primary 5'),
 	]
-
 	label = models.CharField(max_length=15,choices=GRADE_LABEL_CHOICES)
 	subjects = models.ManyToManyField(Subject, related_name='grades_taught_in')
 
@@ -38,8 +38,12 @@ class Grade(models.Model):
 class TeacherProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='teacher_profile', on_delete=models.CASCADE)
+	bio = models.TextField(_('Biography'), null=True)
 	image = models.ImageField(upload_to='images/teacher_profiles')
 	grades = models.ManyToManyField(Grade, related_name='teachers')
+
+	qualifications = models.CharField(max_length=500, null=True)
+	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers')
 
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
