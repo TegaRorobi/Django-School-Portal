@@ -30,7 +30,7 @@ MASTER_ACCOUNT_PASSWORD = config('MASTER_ACCOUNT_PASSWORD')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [config('PRIVATE_IP_ADDRESS'), 'localhost', '127.0.0.1']
 
 
 # Application definition
