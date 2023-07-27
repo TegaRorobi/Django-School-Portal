@@ -92,3 +92,30 @@ class StudentProfile(models.Model):
 
 	def __str__(self):
 		return str(self.user)
+
+
+
+
+
+class AdminProfile(models.Model):
+
+	user = models.OneToOneField(UserModel, related_name='admin_profile', on_delete=models.CASCADE)
+	image = models.ImageField(upload_to='images/admin_profiles')
+	position = models.CharField(max_length=300)
+	bio = models.TextField()
+
+	#timestamps
+	date_created = models.DateTimeField(auto_now_add=True)
+	last_modified = models.DateTimeField(auto_now=True)
+
+	
+	def save(self, *args, **kwargs):
+		if self.user.is_student:
+			# log an error message
+			raise IntegrityError("It is illegal to attach an admin profile to a user object already attached to a student profile")
+		self.user.is_admin = True
+		self.user.save()
+		super().save(*args, **kwargs)
+
+	def __str__(self):
+		return str(self.user)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Grade, TeacherProfile, StudentProfile
+from .models import Subject, Grade, TeacherProfile, StudentProfile, AdminProfile
 
 admin.site.register(Subject)
 admin.site.register(Grade)
@@ -24,3 +24,8 @@ class StudentProfileAdmin(admin.ModelAdmin):
 	@admin.display()
 	def subjects_(self, obj):
 		return str([subject.label for subject in obj.subjects.all()]).replace('\'', '')
+
+@admin.register(AdminProfile)
+class AdminprofileAdmin(admin.ModelAdmin):
+	model = AdminProfile 
+	list_display = ['user', 'image', 'position']
