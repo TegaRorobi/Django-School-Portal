@@ -36,19 +36,24 @@ class User(AbstractUser):
 	name = models.CharField(_('Full Name'), max_length=200, null=True, blank=False)
 	username = models.CharField(_('Email'), max_length=150, unique=True, validators=[EmailValidator])
 	gender = models.CharField(max_length=1, null=True, choices=GENDER_CHOICES)
-	account_type = models.CharField(max_length=8, choices=ACCOUNT_TYPE_CHOICES, null=True)
 	dob = models.DateField(_('Date of Birth'), null=True)
 	address = models.CharField(max_length=200, null=True)
 	phone = models.CharField(_('Phone Number'), max_length=14, null=True, validators=[PHONE_NUMBER_VALIDATOR])
 	passkey = models.CharField(max_length=13, unique=True, blank=True, editable=False)
+	is_student = models.BooleanField(null=True)
+	is_teacher = models.BooleanField(null=True)
+	is_admin = models.BooleanField(null=True)
 
 
 	REQUIRED_FIELDS = []
 	USERNAME_FIELD = 'username'
 
-
 	def save(self, *args, **kwargs):
-		self.set_password(self.password)
+		if self.password and not self.password.startswith('pbkdf2_sha256'):
+			self.set_password(self.password)
+			# alternatively, 
+			# self.password = make_password(self.password) # make_password from django.contrib.auth.hashers
+
 		if not self.passkey:
 			while True:
 				try:
