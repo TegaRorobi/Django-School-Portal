@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
 import datetime
@@ -50,12 +50,12 @@ class TeacherProfile(models.Model):
 	last_modified = models.DateTimeField(auto_now=True)
 
 	def save(self, *args, **kwargs):
-		try:
-			if self.user.student_profile:
-				# log an error message
-				return
-		except:
-			super().save(*args, **kwargs)
+		if self.user.is_student:
+			# log an error message
+			raise IntegrityError("It is illegal to attach a teacher profile to a user object already attached to a student profile")
+		self.user.is_teacher = True
+		self.user.save()
+		super().save(*args, **kwargs)
 
 	def __str__(self):
 		return str(self.user)
@@ -79,7 +79,10 @@ class StudentProfile(models.Model):
 				# log an error message
 				return
 		except:
+			self.user.is_student = True
 			# making sure all selected subjects are offered by the selected grade.
+			# O(n) time complexity and O(n) space complexity, where n is the number of
+			# subjects offered by the grade which is fairly constant
 			hashset = set([subject.label for subject in self.grade.subjects.all()])
 			for subject in self.subjects.all():
 				if subject.label not in hashset:
@@ -89,4 +92,3 @@ class StudentProfile(models.Model):
 
 	def __str__(self):
 		return str(self.user)
-

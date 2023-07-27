@@ -16,12 +16,6 @@ class User(AbstractUser):
 	class Meta:
 		unique_together = ['username', 'passkey']
 
-	ACCOUNT_TYPE_CHOICES = [
-		("admin", "Admin"),
-		("student", "Student"),
-		("educator", "Educator")
-	]
-
 	GENDER_CHOICES = [
 		('m', 'Male'),
 		('f', 'Female')
@@ -40,9 +34,9 @@ class User(AbstractUser):
 	address = models.CharField(max_length=200, null=True)
 	phone = models.CharField(_('Phone Number'), max_length=14, null=True, validators=[PHONE_NUMBER_VALIDATOR])
 	passkey = models.CharField(max_length=13, unique=True, blank=True, editable=False)
-	is_student = models.BooleanField(null=True)
-	is_teacher = models.BooleanField(null=True)
-	is_admin = models.BooleanField(null=True)
+	is_student = models.BooleanField()
+	is_teacher = models.BooleanField()
+	is_admin = models.BooleanField()
 
 
 	REQUIRED_FIELDS = []
@@ -52,8 +46,13 @@ class User(AbstractUser):
 		if self.password and not self.password.startswith('pbkdf2_sha256'):
 			self.set_password(self.password)
 			# alternatively, 
-			# self.password = make_password(self.password) # make_password from django.contrib.auth.hashers
+			# self.password = django.contrib.auth.hashers.make_password(self.password)
 
+		# is_student should be mutually exclusive with other flags
+		# is_teacher and is_admin are not mutually exclusive.
+		if self.is_student + self.is_teacher + self.is_admin > 1 and self.is_student:
+			raise IntegrityError("A user account attached to a student profile cannot be attached to any other profile.")
+			
 		if not self.passkey:
 			while True:
 				try:
@@ -64,6 +63,7 @@ class User(AbstractUser):
 					pass
 		else:
 			super().save(*args, **kwargs)
+
 
 	def __str__(self):
 		return self.name if self.name else self.username
