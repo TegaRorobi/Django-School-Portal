@@ -21,8 +21,6 @@ can alternatively use their password to login or the auto generated passkey.
 
 
 
-
-
 -----------------------
 Monday 17th July, 2023
 -----------------------
@@ -55,3 +53,36 @@ the urls.py file in the project folder.
 
 And I also made sure the password (entered as clear text) is hashed in the save method
 of the custom user model to ensure passwords are never saved as clear text.
+
+
+
+
+--------------------------
+Wednesday 26th July, 2023
+--------------------------
+Functionality I want on the site:
+
+Students
+--------
+	* Checking their results 
+	* Messaging teachers, admins 
+	* Viewing general announcements
+	* Viewing received messages
+
+Teachers
+--------
+	* Uploading students' results
+	* Viewing their students' results
+	* Messaging students, admins, other teachers
+	* Viewing general and staff announcements
+	* Viewing received messages
+
+Admins
+------
+	* Posting general announcements
+	* Posting staff announcements
+	* Viewing all announcements
+	* Messaging students, teachers and other admins
+	* Viewing any student's results
+	* Viewing received messages
+
