@@ -31,7 +31,7 @@ MASTER_ACCOUNT_PASSWORD = config('MASTER_ACCOUNT_PASSWORD')
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = [config('PRIVATE_IP_ADDRESS'), 'localhost', '127.0.0.1']
-
+CSRF_TRUSTED_ORIGINS = ['http://'+origin for origin in ALLOWED_HOSTS]
 
 # Application definition
 
@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'main.apps.MainConfig',
-    'user.apps.UserConfig',
+    'main',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +140,8 @@ AUTHENTICATION_BACKENDS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
+
+ADMIN_URL = config('ADMIN_URL')
+
+LOGIN_URL = '/accounts/login'
+LOGOUT_URL = '/accounts/logout'

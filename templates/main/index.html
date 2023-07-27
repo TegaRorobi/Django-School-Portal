@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+<!-- {% block head_addons %} 
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+  </style>
+{% endblock %}
+ -->
+{% block title %} Django School System {% endblock %}
+
+{% block content %}
+<div class='m-3'>
+  {% include 'main/navbar.html' %}
+</div>
+
+
+<div class='container mt-5'>
+  {% if user.is_authenticated %}
+    <h2> Welcome {{user.username}}</h2>
+  {% endif %}
+  <h1>This is a heading</h1>
+  <button>Hello world</button>
+</div>
+
+{% endblock %}

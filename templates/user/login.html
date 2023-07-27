@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+{% block head_addons %}
+	<style>
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f8f9fa;
+    }
+  </style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-5">
+			<div class="card shadow p-4">
+				<div class="card-body text-center">
+					<h2 class="fw-bold mb-4">Login</h2>
+					<form action="." method='POST'>
+						{% csrf_token %}
+						<div class="mb-3">
+							<label for="username" class="form-label">Email</label>
+							<input type="text" class="form-control" id="username" name="username" required>
+						</div>
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input type="password" class="form-control" id="password" name="password" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Login</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
