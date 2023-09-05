@@ -31,7 +31,7 @@ MASTER_ACCOUNT_PASSWORD = config('MASTER_ACCOUNT_PASSWORD')
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = [config('PRIVATE_IP_ADDRESS'), 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['http://'+origin for origin in ALLOWED_HOSTS]
+CSRF_TRUSTED_ORIGINS = ['http://'+host for host in ALLOWED_HOSTS]
 
 # Application definition
 
@@ -43,11 +43,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # apps
     'main',
     'user',
+    'api',
+
+    # libraries
+    'debug_toolbar'
+    'rest_framework',
+    'corsheaders',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,3 +158,5 @@ ADMIN_URL = config('ADMIN_URL')
 
 LOGIN_URL = '/accounts/login'
 LOGOUT_URL = '/accounts/logout'
+
+CORS_ALLOW_ALL_ORIGINS = True
