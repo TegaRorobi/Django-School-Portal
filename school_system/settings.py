@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'api',
 
     # libraries
-    'debug_toolbar'
+    'debug_toolbar',
     'rest_framework',
     'corsheaders',
 ]
