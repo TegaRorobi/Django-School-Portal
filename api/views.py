@@ -13,35 +13,35 @@ from rest_framework import status
 from rest_framework import generics, mixins
 
 from django.http import Http404
-from api.permissions import IsAdminUserOrReadOnly, IsMessageSender
+from api.permissions import *
 
 @api_view(['GET'])
 def getRoutes(request):
 	routes = [
 		'GET /api/',
 
-		'[GET | POST] 			/api/users 						Users list',
+		'[GET | POST]           /api/users                      Users list',
 
-		'[GET | PUT | DELETE] 	/api/users/<int:pk>/			Users detail',
-
-
-		'[GET | POST] 			/api/subjects/					Subjects list',
-
-		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/			Subjects detail',
+		'[GET | PUT | DELETE]   /api/users/<int:pk>/            Users detail',
 
 
-		'[GET | POST]    		/api/grades/					Grades list',
+		'[GET | POST]           /api/subjects/                  Subjects list',
 
-		'[GET | PUT | DELETE] 	/api/grades/<int:pk>/			Grades detail',
+		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/         Subjects detail',
 
 
-		'[GET | POST] 			/api/messages/sent/				Sent messages list',
+		'[GET | POST]           /api/grades/                    Grades list',
 
-		'[GET] 					/api/messages/received/			Received messages list',
+		'[GET | PUT | DELETE]   /api/grades/<int:pk>/           Grades detail',
 
-		'[GET | DELETE] 		/api/messages/sent/<int:pk>/	Sent messages detail',
 
-		'[GET] 				/api/messages/received/<int:pk>/	Received messages detail',
+		'[GET | POST]           /api/messages/sent/             Sent messages list',
+
+		'[GET]                  /api/messages/received/         Received messages list',
+
+		'[GET | DELETE]         /api/messages/sent/<int:pk>/    Sent messages detail',
+
+		'[GET]              /api/messages/received/<int:pk>/    Received messages detail',
 	]
 	return Response(routes)
 
