@@ -7,21 +7,41 @@ UserModel = get_user_model()
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-# from rest_framework import viewsets, permissions
+from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import generics, mixins
 
 from django.http import Http404
-
+from api.permissions import IsAdminUserOrReadOnly, IsMessageSender
 
 @api_view(['GET'])
 def getRoutes(request):
 	routes = [
 		'GET /api/',
-		'[GET | POST] /api/users',
-		'[GET | PUT | DELETE] /api/users/<int:pk>/'
-		'[GET | POST] /api/subjects/',
+
+		'[GET | POST] 			/api/users 						Users list',
+
+		'[GET | PUT | DELETE] 	/api/users/<int:pk>/			Users detail',
+
+
+		'[GET | POST] 			/api/subjects/					Subjects list',
+
+		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/			Subjects detail',
+
+
+		'[GET | POST]    		/api/grades/					Grades list',
+
+		'[GET | PUT | DELETE] 	/api/grades/<int:pk>/			Grades detail',
+
+
+		'[GET | POST] 			/api/messages/sent/				Sent messages list',
+
+		'[GET] 					/api/messages/received/			Received messages list',
+
+		'[GET | DELETE] 		/api/messages/sent/<int:pk>/	Sent messages detail',
+
+		'[GET] 				/api/messages/received/<int:pk>/	Received messages detail',
 	]
 	return Response(routes)
 
@@ -139,9 +159,59 @@ class SubjectDetailsV1(APIView):
 class SubjectsListV2(generics.ListCreateAPIView):
 	queryset = Subject.objects.all()
 	serializer_class = SubjectSerializer
+	permission_classes = [IsAdminUserOrReadOnly]
 class SubjectDetailsV2(generics.RetrieveUpdateDestroyAPIView):
 	queryset = Subject.objects.all()
 	serializer_class = SubjectSerializer
+	permission_classes = [IsAdminUserOrReadOnly]
 	def put(self, request, *args, **kwargs):
 		return self.update(request, *args, partial=True, **kwargs)
+
+
+
+
+
+
+class GradesList(generics.ListCreateAPIView):
+	queryset = Grade.objects.all()
+	serializer_class = GradeSerializer
+	permission_classes = [IsAdminUserOrReadOnly]
+class GradeDetails(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Grade.objects.all()
+	serializer_class = GradeSerializer
+	permission_classes = [IsAdminUserOrReadOnly]
+	def put(self, request, *args, **kwargs):
+		return self.update(request, *args, partial=True, **kwargs)
+
+
+
+
+
+
+class MessagesSent(generics.ListCreateAPIView):
+	serializer_class = MessageSerializer
+	permission_classes = [permissions.IsAuthenticated]
+	def get_queryset(self):
+		return Message.objects.filter(sender=self.request.user).order_by('-timestamp')
+	def perform_create(self, serializer):
+		serializer.save(sender=self.request.user)
+class SentMessageDetails(generics.RetrieveDestroyAPIView):
+	def get_queryset(self):
+		return Message.objects.filter(sender=self.request.user).order_by('-timestamp')
+	serializer_class = MessageSerializer
+	permission_classes = [permissions.IsAuthenticated]
+class MessagesReceived(generics.ListAPIView):
+	serializer_class = MessageSerializer
+	permission_classes = [permissions.IsAuthenticated]
+	def get_queryset(self):
+		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
+class ReceivedMessageDetails(generics.RetrieveAPIView):
+	def get_queryset(self):
+		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
+	serializer_class = MessageSerializer
+	permission_classes = [permissions.IsAuthenticated]
+
+
+
+
 

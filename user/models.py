@@ -17,8 +17,8 @@ class User(AbstractUser):
 		unique_together = ['username', 'passkey']
 
 	GENDER_CHOICES = [
-		('m', 'Male'),
-		('f', 'Female')
+		('M', 'Male'),
+		('F', 'Female')
 	]
 
 	# Works with Nigeria's country code, but can be modified for any country
