@@ -1,19 +1,12 @@
 
 from .serializers import *
 from main.models import *
-
-from django.contrib.auth import get_user_model
-UserModel = get_user_model()
+from .permissions import *
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import permissions
-from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework import generics, mixins
+from rest_framework import viewsets, permissions, mixins
 
-from django.http import Http404
-from api.permissions import *
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -22,17 +15,17 @@ def getRoutes(request):
 
 		'[GET | POST]           /api/users                      Users list',
 
-		'[GET | PUT | DELETE]   /api/users/<int:pk>/            Users detail',
+		'[GET | PUT | DELETE]   /api/users/<int:pk>/            User detail',
 
 
 		'[GET | POST]           /api/subjects/                  Subjects list',
 
-		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/         Subjects detail',
+		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/         Subject detail',
 
 
 		'[GET | POST]           /api/grades/                    Grades list',
 
-		'[GET | PUT | DELETE]   /api/grades/<int:pk>/           Grades detail',
+		'[GET | PUT | DELETE]   /api/grades/<int:pk>/           Grade detail',
 
 
 		'[GET | POST]           /api/messages/sent/             Sent messages list',
@@ -47,171 +40,58 @@ def getRoutes(request):
 
 
 
-class UsersListV1(APIView):
-	"""
-	View and create user instances.
-	"""
-	def get(self, request, format=None):
-		users = UserModel.objects.all()
-		serializer = UserSerializer(users, many=True)
-		return Response(serializer.data, status=status.HTTP_200_OK)
-	def post(self, request, format=None):
-		serializer = UserSerializer(request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-class UserDetailsV1(APIView):
-	"""
-	Retrieve, update or delete a user instance
-	"""
-	def get_object(self, pk):
-		try:
-			return UserModel.objects.get(pk=pk)
-		except UserModel.DoesNotExist:
-			raise Http404
-	def get(self, request, pk, format=None):
-		ins = self.get_object(pk)
-		serializer = UserSerializer(ins)
-		return Response(serializer.data, status=status.HTTP_200_OK)
-	def put(self, request, pk, format=None):
-		ins = self.get_object(pk)
-		data = UserSerializer(ins).data
-		data.update(request.data)
-		serializer = UserSerializer(ins, data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-	def delete(self, request, pk, format=None):
-		ins = self.get_object(pk)
-		ins.delete()
-		return Response(status=status.HTTP_204_NO_CONTENT)
 
-class UsersListV2(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-	queryset = UserModel.objects.all()
+
+class UsersViewSet(viewsets.ModelViewSet):
 	serializer_class = UserSerializer
-	def get(self, request, *args, **kwargs):
-		return self.list(request, *args, **kwargs)
-	def post(self, request, *args, **kwargs):
-		return self.create(request, *args, **kwargs)
-class UserDetailsV2(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
 	queryset = UserModel.objects.all()
-	serializer_class = UserSerializer
-	def get(self, request, *args, **kwargs):
-		return self.retrieve(request, *args, **kwargs)
-	def put(self, request, *args, **kwargs):
-		return self.update(request, *args, partial=True, **kwargs)
-	def delete(self, request, *args, **kwargs):
-		return self.destroy(request, *args, **kwargs)
-
-class UsersListV3(generics.ListCreateAPIView):
-	queryset = UserModel.objects.all()
-	serializer_class = UserSerializer
-class UserDetailsV3(generics.RetrieveUpdateDestroyAPIView):
-	queryset = UserModel.objects.all()
-	serializer_class = UserSerializer
-	def put(self, request, *args, **kwargs):
-		return self.update(request, *args, partial=True, **kwargs)
+	def get_permissions(self):
+		if self.action == 'destroy':
+			return [IsSuperUser()]
+		return [IsAdminOrSuperUserOrReadOnly()]
 
 
 
 
 
-class SubjectsListV1(APIView):
-	"""
-	View and create subject instances
-	"""
-	def get(self, request, format=None):
-		subjects = Subject.objects.all()
-		serializer = SubjectSerializer(subjects, many=True)
-		return Response(serializer.data, status=status.HTTP_200_OK)
-	def post(self, request, format=None):
-		serializer = SubjectSerializer(request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-class SubjectDetailsV1(APIView):
-	def get_object(self, pk):
-		try:
-			return Subject.objects.get(pk=pk)
-		except Subject.DoesNotExist:
-			raise Http404
-	def get(self, request, pk, *args, **kwargs):
-		ins = self.get_object(pk)
-		serializer = SubjectSerializer(ins)
-		return Response(serializer.data, status=status.HTTP_200_OK)
-	def put(self, request, pk, *args, **kwargs):
-		ins = self.get_object(pk)
-		data = SubjectSerializer(ins).data 
-		data.update(request.data)
-		serializer = SubjectSerializer(ins, data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-	def delete(self, request, pk, *args, **kwargs):
-		ins = self.get_object(pk)
-		ins.delete()
-		return Response(status=status.HTTP_204_NO_CONTENT)
 
-class SubjectsListV2(generics.ListCreateAPIView):
+class SubjectsViewSet(viewsets.ModelViewSet):
 	queryset = Subject.objects.all()
 	serializer_class = SubjectSerializer
-	permission_classes = [IsAdminUserOrReadOnly]
-class SubjectDetailsV2(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Subject.objects.all()
-	serializer_class = SubjectSerializer
-	permission_classes = [IsAdminUserOrReadOnly]
-	def put(self, request, *args, **kwargs):
-		return self.update(request, *args, partial=True, **kwargs)
+	permission_classes = [IsAdminOrSuperUserOrReadOnly]
 
 
 
 
 
 
-class GradesList(generics.ListCreateAPIView):
+class GradesViewSet(viewsets.ModelViewSet):
 	queryset = Grade.objects.all()
 	serializer_class = GradeSerializer
-	permission_classes = [IsAdminUserOrReadOnly]
-class GradeDetails(generics.RetrieveUpdateDestroyAPIView):
-	queryset = Grade.objects.all()
-	serializer_class = GradeSerializer
-	permission_classes = [IsAdminUserOrReadOnly]
-	def put(self, request, *args, **kwargs):
-		return self.update(request, *args, partial=True, **kwargs)
+	def get_permissions(self):
+		if self.action == 'destroy':
+			return [IsSuperUser()]
+		return [IsAdminOrSuperUserOrReadOnly()]
 
 
 
 
+class AllMessagesViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+	queryset = Message.objects.all()
+	serializer_class = AllMessagesSerializer
+	permission_classes = [IsSuperUser]
 
 
-class MessagesSent(generics.ListCreateAPIView):
-	serializer_class = MessageSerializer
+class SentMessagesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+	serializer_class = SentMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
-	def get_queryset(self):
-		return Message.objects.filter(sender=self.request.user).order_by('-timestamp')
 	def perform_create(self, serializer):
-		serializer.save(sender=self.request.user)
-class SentMessageDetails(generics.RetrieveDestroyAPIView):
+		return serializer.save(sender=self.request.user)
 	def get_queryset(self):
 		return Message.objects.filter(sender=self.request.user).order_by('-timestamp')
-	serializer_class = MessageSerializer
-	permission_classes = [permissions.IsAuthenticated]
-class MessagesReceived(generics.ListAPIView):
-	serializer_class = MessageSerializer
+
+class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+	serializer_class = ReceivedMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def get_queryset(self):
 		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
-class ReceivedMessageDetails(generics.RetrieveAPIView):
-	def get_queryset(self):
-		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
-	serializer_class = MessageSerializer
-	permission_classes = [permissions.IsAuthenticated]
-
-
-
-
-
