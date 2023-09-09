@@ -1,3 +1,4 @@
+
 from django.urls import path, include
 from .views import *
 
@@ -14,6 +15,10 @@ urlpatterns = [
 	#users
 	path('users/', UsersViewSet.as_view(LIST_CREATE), name='users-list'),
 	path('users/<int:pk>/', UsersViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='user-detail'),
+
+	#studentprofiles
+	path('student-profiles/', StudentProfilesViewSet.as_view(LIST_CREATE), name='student-profiles-list'),
+	path('student-profiles/<int:pk>/', StudentProfilesViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='student-profile-detail'),
 
 	#subjects
 	path('subjects/', SubjectsViewSet.as_view(LIST_CREATE), name='subjects-list'),

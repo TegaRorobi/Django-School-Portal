@@ -14,6 +14,13 @@ class UserSerializer(serializers.ModelSerializer):
 		fields = [field.name for field in model._meta.fields] + ['sent_messages', 'received_messages']
 
 
+class StudentProfileSerializer(serializers.ModelSerializer):
+	user_display = serializers.ReadOnlyField(source='user.__str__')
+	class Meta:
+		model = StudentProfile 
+		fields = [field.name for field in model._meta.fields] + ['user_display']
+
+
 class SubjectSerializer(serializers.ModelSerializer):
 	grades_taught_in = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta:
@@ -28,6 +35,7 @@ class GradeSerializer(serializers.ModelSerializer):
 		model = Grade 
 		fields = ['id', 'label', 'subjects', 'students', 'teachers']
 
+
 class AllMessagesSerializer(serializers.ModelSerializer):
 	sender = serializers.ReadOnlyField(source='sender.__str__')
 	receiver = serializers.ReadOnlyField(source='receiver.__str__')
@@ -35,15 +43,16 @@ class AllMessagesSerializer(serializers.ModelSerializer):
 		model = Message 
 		fields = ['id', 'content', 'sender', 'receiver', 'timestamp']
 
+
 class SentMessageSerializer(serializers.ModelSerializer):
-	receiver_display = serializers.CharField(source='receiver.__str__', read_only=True)
+	receiver_display = serializers.ReadOnlyField(source='receiver.__str__')
 	class Meta:
 		model = Message 
 		fields = ['id', 'content', 'receiver', 'receiver_display', 'timestamp']
 
 
 class ReceivedMessageSerializer(serializers.ModelSerializer):
-	sender_display = serializers.CharField(source='sender.__str__', read_only=True)
+	sender_display = serializers.ReadOnlyField(source='sender.__str__')
 	class Meta:
 		model = Message 
 		fields = ['id', 'content', 'sender', 'sender_display', 'timestamp']

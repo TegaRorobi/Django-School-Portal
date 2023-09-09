@@ -50,20 +50,19 @@ class UsersViewSet(viewsets.ModelViewSet):
 			return [IsSuperUser()]
 		return [IsAdminOrSuperUserOrReadOnly()]
 
-
-
-
-
+class StudentProfilesViewSet(viewsets.ModelViewSet):
+	serializer_class = StudentProfileSerializer
+	queryset = StudentProfile.objects.all()
+	def get_permissions(self):
+		if self.action == 'delete':
+			return [IsSuperUser()]
+		return [IsAdminOrSuperUserOrReadOnly()]
+		
 
 class SubjectsViewSet(viewsets.ModelViewSet):
 	queryset = Subject.objects.all()
 	serializer_class = SubjectSerializer
 	permission_classes = [IsAdminOrSuperUserOrReadOnly]
-
-
-
-
-
 
 class GradesViewSet(viewsets.ModelViewSet):
 	queryset = Grade.objects.all()
@@ -73,14 +72,10 @@ class GradesViewSet(viewsets.ModelViewSet):
 			return [IsSuperUser()]
 		return [IsAdminOrSuperUserOrReadOnly()]
 
-
-
-
 class AllMessagesViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	queryset = Message.objects.all()
 	serializer_class = AllMessagesSerializer
 	permission_classes = [IsSuperUser]
-
 
 class SentMessagesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
 	serializer_class = SentMessageSerializer
