@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions, mixins
 
+from django.contrib.auth import get_user_model
+UserModel = get_user_model()
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -55,6 +57,11 @@ class TeacherProfilesViewSet(viewsets.ModelViewSet):
 	serializer_class = TeacherProfileSerializer
 	queryset = TeacherProfile.objects.all()
 	permission_classes = [IsAdminOrSuperUserOrOwnerOrReadOnly]
+
+class AdminProfilesViewSet(viewsets.ModelViewSet):
+	serializer_class = AdminProfileSerializer
+	queryset = AdminProfile.objects.all()
+	permission_classes = [IsSuperUserOrOwnerOrReadOnly]
 
 class SubjectsViewSet(viewsets.ModelViewSet):
 	queryset = Subject.objects.all()

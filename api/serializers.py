@@ -28,6 +28,13 @@ class TeacherProfileSerializer(serializers.ModelSerializer):
 		fields = [field.name for field in model._meta.fields] + ['grades', 'subject_specializations', 'user_display']
 
 
+class AdminProfileSerializer(serializers.ModelSerializer):
+	user_display = serializers.ReadOnlyField(source='user.__str__')
+	class Meta:
+		model = AdminProfile 
+		fields = [field.name for field in model._meta.fields] + ['user_display']
+
+
 class SubjectSerializer(serializers.ModelSerializer):
 	grades_taught_in = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta:
