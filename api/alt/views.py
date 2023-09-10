@@ -167,3 +167,27 @@ class ReceivedMessageDetails(generics.RetrieveAPIView):
 		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
 	serializer_class = MessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
+
+
+
+class MessagesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+	permission_classes = [permissions.IsAuthenticated]
+	def get_queryset(self):
+		list_url = self.reverse_action(self.list.url_name)
+		return (
+			Message.objects.filter(sender=self.request.user).order_by('-timestamp') if 'sent'in list_url else (
+				Message.objects.filter(receiver=self.request.user).order_by('-timestamp') if 'received' in list_url else (
+					Message.objects.all())))
+	def get_serializer_class(self):
+		list_url = self.reverse_action(self.list.url_name)
+		return (
+			SentMessageSerializer if 'sent' in list_url else (
+				ReceivedMessageSerializer if 'received' in list_url else (
+					AllMessageSerializer)))
+	def perform_create(self, serializer):
+		return serializer.save(sender=self.request.user)
+
+	
+
+
+

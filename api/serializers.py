@@ -18,14 +18,21 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 	user_display = serializers.ReadOnlyField(source='user.__str__')
 	class Meta:
 		model = StudentProfile 
-		fields = [field.name for field in model._meta.fields] + ['user_display']
+		fields = [field.name for field in model._meta.fields] + ['subjects', 'user_display']
+
+
+class TeacherProfileSerializer(serializers.ModelSerializer):
+	user_display = serializers.ReadOnlyField(source='user.__str__')
+	class Meta:
+		model = TeacherProfile 
+		fields = [field.name for field in model._meta.fields] + ['grades', 'subject_specializations', 'user_display']
 
 
 class SubjectSerializer(serializers.ModelSerializer):
 	grades_taught_in = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta:
 		model = Subject 
-		fields = ['label', 'grades_taught_in']
+		fields = '__all__'
 
 
 class GradeSerializer(serializers.ModelSerializer):

@@ -49,10 +49,12 @@ class UsersViewSet(viewsets.ModelViewSet):
 class StudentProfilesViewSet(viewsets.ModelViewSet):
 	serializer_class = StudentProfileSerializer
 	queryset = StudentProfile.objects.all()
-	def get_permissions(self):
-		if self.action == 'delete':
-			return [IsSuperUser()]
-		return [IsAdminOrSuperUserOrReadOnly()]
+	permission_classes = [IsAdminOrSuperUserOrOwnerOrReadOnly]
+	
+class TeacherProfilesViewSet(viewsets.ModelViewSet):
+	serializer_class = TeacherProfileSerializer
+	queryset = TeacherProfile.objects.all()
+	permission_classes = [IsAdminOrSuperUserOrOwnerOrReadOnly]
 
 class SubjectsViewSet(viewsets.ModelViewSet):
 	queryset = Subject.objects.all()
@@ -85,25 +87,4 @@ class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 	permission_classes = [permissions.IsAuthenticated]
 	def get_queryset(self):
 		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
-
-class MessagesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
-	permission_classes = [permissions.IsAuthenticated]
-	def get_queryset(self):
-		list_url = self.reverse_action(self.list.url_name)
-		return (
-			Message.objects.filter(sender=self.request.user).order_by('-timestamp') if 'sent'in list_url else (
-				Message.objects.filter(receiver=self.request.user).order_by('-timestamp') if 'received' in list_url else (
-					Message.objects.all())))
-	def get_serializer_class(self):
-		list_url = self.reverse_action(self.list.url_name)
-		return (
-			SentMessageSerializer if 'sent' in list_url else (
-				ReceivedMessageSerializer if 'received' in list_url else (
-					AllMessageSerializer)))
-	def perform_create(self, serializer):
-		return serializer.save(sender=self.request.user)
-
-	
-
-
 
