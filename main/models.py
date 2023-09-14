@@ -135,3 +135,40 @@ class Message(models.Model):
 
 	def __str__(self):
 		return f"{self.sender} -> {self.receiver}"
+
+
+class TermReport(models.Model):
+	TERM_CHOICES = (('first', 'first'), ('second', 'second'), ('third', 'third'))
+
+	student = models.ForeignKey(StudentProfile, related_name='term_reports', on_delete=models.CASCADE)
+	grade = models.ForeignKey(Grade, related_name='term_reports', on_delete=models.CASCADE)
+	term = models.CharField(max_length=6, choices=TERM_CHOICES)
+	remark = models.CharField(max_length=200, null=True, blank=True)
+
+	#timestamps
+	last_modified = models.DateTimeField(auto_now=True)
+	date_created = models.DateTimeField(auto_now_add=True)
+
+	def average(self):
+		# O(n) time, O(1) space
+		total = num_results = 0
+		for result in self.results.all():
+			total += result.percentage()
+			num_results += 1
+		return total/num_results
+
+
+
+class Result(models.Model):
+	term_report = models.ForeignKey(TermReport, related_name='results', on_delete=models.CASCADE)
+	subject = models.ForeignKey(Subject, related_name='student_scores', on_delete=models.CASCADE)
+	first_test = models.IntegerField()
+	second_test = models.IntegerField()
+	exam = models.IntegerField()
+
+	#timestamps
+	last_modified = models.DateTimeField(auto_now=True)
+	date_created = models.DateTimeField(auto_now_add=True)
+
+	def percentage(self):
+		return (self.first_test + self.second_test + self.exam) / 100
