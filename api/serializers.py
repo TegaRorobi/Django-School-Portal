@@ -70,3 +70,15 @@ class ReceivedMessageSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Message 
 		fields = ['id', 'content', 'sender', 'sender_display', 'timestamp']
+
+
+class TermReportSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = TermReport
+		fields = '__all__'
+
+
+class ResultSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Result
+		fields = '__all__'
