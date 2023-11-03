@@ -1,7 +1,12 @@
 
-from django.urls import path
+from django.urls import re_path
 from .views import *
 
+from rest_framework_simplejwt.views import (
+    token_obtain_pair,
+    token_refresh,
+    token_blacklist
+)
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -17,4 +22,8 @@ router.register('messages/sent', SentMessagesViewSet, 'sent-messages')
 router.register('messages/received', ReceivedMessagesViewSet, 'received-messages')
 
 
-urlpatterns = router.urls
+urlpatterns = router.urls + [
+    re_path('^auth/login/?$', token_obtain_pair, name='api-login'),
+    re_path('^auth/login/refresh/?$', token_refresh, name='api-login-refresh'),
+    re_path('^auth/logout/?$', token_blacklist, name='api-logout'),
+]

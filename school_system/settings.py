@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'corsheaders',
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+
 ]
 
 INTERNAL_IPS = [
