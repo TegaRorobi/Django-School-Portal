@@ -1,10 +1,54 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils.translation import gettext as _
 from django.db import models, IntegrityError
-from django.core.validators import EmailValidator, RegexValidator
-from django.conf import settings
+from django.core.validators import RegexValidator
 import random
 
+
+class UserManager(UserManager):
+	def _create_user(self, email, password, **extra_fields):
+		if not email:
+			raise ValueError("The given username must be set")
+
+		email = self.normalize_email(email)
+		user = self.model(email=email, **extra_fields)
+		user.set_password(password)
+
+		while True:
+			try:
+				user.passkey = self.model.generate_passkey(None, "IHEMCNPS-", 4)
+				user.save(using=self._db)
+				break
+			except IntegrityError as e:
+				pass
+		return user
+
+	def create_user(self, email=None, password=None, **extra_fields):
+		extra_fields.setdefault("is_staff", False)
+		extra_fields.setdefault("is_superuser", False)
+
+		is_admin = extra_fields.get('is_admin', False)
+		is_teacher = extra_fields.get('is_teacher', False)
+		is_student = extra_fields.get('is_student', False)
+
+		if is_admin + is_student + is_teacher > 1 and is_student:
+			raise IntegrityError("A user account marked as 'student' cannot be attached to any other profile.")
+		
+		if is_admin + is_student + is_teacher == 0:
+			raise IntegrityError("Unknown type for user account, please select one of: 'is_admin', 'is_student', 'is_teacher'")
+		
+		return self._create_user(email, password, **extra_fields)
+
+	def create_superuser(self, email=None, password=None, **extra_fields):
+		extra_fields.setdefault("is_staff", True)
+		extra_fields.setdefault("is_superuser", True)
+
+		if extra_fields.get("is_staff") is not True:
+			raise ValueError("Superuser must have is_staff=True.")
+		if extra_fields.get("is_superuser") is not True:
+			raise ValueError("Superuser must have is_superuser=True.")
+
+		return self._create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -14,7 +58,7 @@ class User(AbstractUser):
 		return const + ''.join(ret)
 
 	class Meta:
-		unique_together = ['username', 'passkey']
+		unique_together = ['email', 'passkey']
 
 	GENDER_CHOICES = [
 		('M', 'Male'),
@@ -28,42 +72,22 @@ class User(AbstractUser):
 	)
 
 	name = models.CharField(_('Full Name'), max_length=200, null=True, blank=False)
-	username = models.CharField(_('Email'), max_length=150, unique=True, validators=[EmailValidator])
-	gender = models.CharField(max_length=1, null=True, choices=GENDER_CHOICES)
+	email = models.EmailField(_('Email Address'), unique=True)
+	gender = models.CharField(_('Gender'), max_length=1, null=True, choices=GENDER_CHOICES)
 	dob = models.DateField(_('Date of Birth'), null=True)
-	address = models.CharField(max_length=200, null=True)
+	address = models.CharField(_('House Address'), max_length=200, null=True)
 	phone = models.CharField(_('Phone Number'), max_length=14, null=True, validators=[PHONE_NUMBER_VALIDATOR])
 	passkey = models.CharField(max_length=13, unique=True, blank=True, editable=False)
-	is_student = models.BooleanField()
-	is_teacher = models.BooleanField()
-	is_admin = models.BooleanField()
+	is_student = models.BooleanField(default=True)
+	is_teacher = models.BooleanField(default=False)
+	is_admin = models.BooleanField(default=False)
 
+	username = None
 
+	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = []
-	USERNAME_FIELD = 'username'
 
-	def save(self, *args, **kwargs):
-		if self.password and not self.password.startswith('pbkdf2_sha256'):
-			self.set_password(self.password)
-			# alternatively, 
-			# self.password = django.contrib.auth.hashers.make_password(self.password)
-
-		# is_student should be mutually exclusive with other flags
-		# is_teacher and is_admin are not mutually exclusive.
-		if self.is_student + self.is_teacher + self.is_admin > 1 and self.is_student:
-			raise IntegrityError("A user account attached to a student profile cannot be attached to any other profile.")
-			
-		if not self.passkey:
-			while True:
-				try:
-					self.passkey = self.generate_passkey("IHEMCNPS-", 4)
-					super().save(*args, **kwargs)
-					break
-				except IntegrityError:
-					pass
-		else:
-			super().save(*args, **kwargs)
-
+	objects = UserManager()
 
 	def __str__(self):
-		return self.name if self.name else self.username
+		return self.name if self.name else self.email
