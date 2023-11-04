@@ -5,8 +5,8 @@ from django.core.validators import RegexValidator
 import random
 
 
-class UserManager(UserManager):
-	def _create_user(self, email, password, **extra_fields):
+class CustomUserManager(UserManager):
+	def _create_user(self, username, email, password, **extra_fields):
 		if not email:
 			raise ValueError("The given username must be set")
 
@@ -23,7 +23,7 @@ class UserManager(UserManager):
 				pass
 		return user
 
-	def create_user(self, email=None, password=None, **extra_fields):
+	def create_user(self, username=None, email=None, password=None, **extra_fields):
 		extra_fields.setdefault("is_staff", False)
 		extra_fields.setdefault("is_superuser", False)
 
@@ -37,18 +37,10 @@ class UserManager(UserManager):
 		if is_admin + is_student + is_teacher == 0:
 			raise IntegrityError("Unknown type for user account, please select one of: 'is_admin', 'is_student', 'is_teacher'")
 		
-		return self._create_user(email, password, **extra_fields)
+		return self._create_user(username=username, email=email, password=password, **extra_fields)
 
 	def create_superuser(self, email=None, password=None, **extra_fields):
-		extra_fields.setdefault("is_staff", True)
-		extra_fields.setdefault("is_superuser", True)
-
-		if extra_fields.get("is_staff") is not True:
-			raise ValueError("Superuser must have is_staff=True.")
-		if extra_fields.get("is_superuser") is not True:
-			raise ValueError("Superuser must have is_superuser=True.")
-
-		return self._create_user(email, password, **extra_fields)
+		return super().create_superuser(username=None, email=email, password=password, **extra_fields)
 
 
 class User(AbstractUser):
@@ -87,7 +79,7 @@ class User(AbstractUser):
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = []
 
-	objects = UserManager()
+	objects = CustomUserManager()
 
 	def __str__(self):
 		return self.name if self.name else self.email
