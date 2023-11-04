@@ -1,22 +1,24 @@
-from django.contrib.auth.backends import BaseBackend
+
+from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
 UserModel = get_user_model()
 
-class CustomAuthBackend(BaseBackend):
+class CustomAuthBackend(ModelBackend):
+	def authenticate(self, email=None, password=None, **kwargs):
+		if email is None:
+			email = kwargs.get(UserModel.USERNAME_FIELD)
 
-	def authenticate(self, request, username=None, password=None, **kwargs):
+		if email is None or password is None:
+			return
 		try:
-			user = UserModel.objects.get(username=username)
-			if (password==user.passkey or password==settings.MASTER_ACCOUNT_PASSWORD or user.check_password(password)):
-				return user
+			user = UserModel._default_manager.get_by_natural_key(email)
 		except UserModel.DoesNotExist:
-			return None
-
-
-	def get_user(self, user_id):
-		try:
-			return UserModel.objects.get(pk=user_id)
-		except:
-			return None
+			# Run the default password hasher once to reduce the timing
+			# difference between an existing and a nonexistent user (#20760).
+			UserModel().set_password(password)
+		else:
+			password_valid = password==user.passkey or password==settings.MASTER_ACCOUNT_PASSWORD or user.check_password(password)
+			if password_valid and self.user_can_authenticate(user):
+				return user
