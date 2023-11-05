@@ -43,7 +43,7 @@ class TeacherProfile(models.Model):
 	grades = models.ManyToManyField(Grade, related_name='teachers')
 
 	qualifications = models.CharField(max_length=500, null=True)
-	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers', null=True)
+	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers')
 
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
@@ -67,7 +67,7 @@ class StudentProfile(models.Model):
 	user = models.OneToOneField(UserModel, related_name='student_profile', on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='images/student_profiles', null=True)
 	grade = models.ForeignKey(Grade, related_name='students', on_delete=models.PROTECT)
-	subjects = models.ManyToManyField(Subject, related_name='offering_students', null=True)
+	subjects = models.ManyToManyField(Subject, related_name='offering_students')
 
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
