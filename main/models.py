@@ -83,11 +83,11 @@ class StudentProfile(models.Model):
 			# making sure all selected subjects are offered by the selected grade.
 			# O(n) time complexity and O(n) space complexity, where n is the number of
 			# subjects offered by the grade which is fairly constant
-			hashset = set([subject.label for subject in self.grade.subjects.all()])
-			for subject in self.subjects.all():
-				if subject.label not in hashset:
-					# log an error message
-					return
+			# hashset = set([subject.label for subject in self.grade.subjects.all()])
+			# for subject in self.subjects.all():
+			# 	if subject.label not in hashset:
+			# 		# log an error message
+			# 		return
 			super().save(*args, **kwargs)
 
 	def __str__(self):
