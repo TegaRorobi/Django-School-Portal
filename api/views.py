@@ -10,36 +10,6 @@ from rest_framework import viewsets, permissions, mixins
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 
-@api_view(['GET'])
-def getRoutes(request):
-	routes = [
-		'GET /api/',
-
-		'[GET | POST]           /api/users                      Users list',
-
-		'[GET | PUT | DELETE]   /api/users/<int:pk>/            User detail',
-
-
-		'[GET | POST]           /api/subjects/                  Subjects list',
-
-		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/         Subject detail',
-
-
-		'[GET | POST]           /api/grades/                    Grades list',
-
-		'[GET | PUT | DELETE]   /api/grades/<int:pk>/           Grade detail',
-
-
-		'[GET | POST]           /api/messages/sent/             Sent messages list',
-
-		'[GET]                  /api/messages/received/         Received messages list',
-
-		'[GET | DELETE]         /api/messages/sent/<int:pk>/    Sent messages detail',
-
-		'[GET]              /api/messages/received/<int:pk>/    Received messages detail',
-	]
-	return Response(routes)
-
 
 
 class UsersViewSet(viewsets.ModelViewSet):

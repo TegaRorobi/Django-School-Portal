@@ -10,10 +10,10 @@ class LoginView(View):
 		return render(request, 'user/login.html')
 
 	def post(self, request, *args, **kwargs):
-		username = request.POST.get('username')
+		email = request.POST.get('username')
 		password = request.POST.get('password')
 
-		usr = authenticate(username=username, password=password)
+		usr = authenticate(email=email, password=password)
 		if usr:
 			login(request, usr)
 			messages.success(request, f"Successfully logged in as {usr.name}")

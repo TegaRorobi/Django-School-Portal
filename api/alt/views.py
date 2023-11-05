@@ -12,6 +12,37 @@ from rest_framework import generics, mixins, permissions, status
 
 from django.http import Http404
 
+@api_view(['GET'])
+def getRoutes(request):
+	routes = [
+		'GET /api/',
+
+		'[GET | POST]           /api/users                      Users list',
+
+		'[GET | PUT | DELETE]   /api/users/<int:pk>/            User detail',
+
+
+		'[GET | POST]           /api/subjects/                  Subjects list',
+
+		'[GET | PUT | DELETE]   /api/subjects/<int:pk>/         Subject detail',
+
+
+		'[GET | POST]           /api/grades/                    Grades list',
+
+		'[GET | PUT | DELETE]   /api/grades/<int:pk>/           Grade detail',
+
+
+		'[GET | POST]           /api/messages/sent/             Sent messages list',
+
+		'[GET]                  /api/messages/received/         Received messages list',
+
+		'[GET | DELETE]         /api/messages/sent/<int:pk>/    Sent messages detail',
+
+		'[GET]              /api/messages/received/<int:pk>/    Received messages detail',
+	]
+	return Response(routes)
+
+
 class UsersListV1(APIView):
 	"""
 	View and create user instances.
