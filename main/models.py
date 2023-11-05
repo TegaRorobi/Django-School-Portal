@@ -39,11 +39,11 @@ class TeacherProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='teacher_profile', on_delete=models.CASCADE)
 	bio = models.TextField(_('Biography'), null=True)
-	image = models.ImageField(upload_to='images/teacher_profiles')
+	image = models.ImageField(upload_to='images/teacher_profiles', null=True)
 	grades = models.ManyToManyField(Grade, related_name='teachers')
 
 	qualifications = models.CharField(max_length=500, null=True)
-	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers')
+	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers', null=True)
 
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
@@ -65,9 +65,9 @@ class TeacherProfile(models.Model):
 class StudentProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='student_profile', on_delete=models.CASCADE)
-	image = models.ImageField(upload_to='images/student_profiles')
+	image = models.ImageField(upload_to='images/student_profiles', null=True)
 	grade = models.ForeignKey(Grade, related_name='students', on_delete=models.PROTECT)
-	subjects = models.ManyToManyField(Subject, related_name='offering_students')
+	subjects = models.ManyToManyField(Subject, related_name='offering_students', null=True)
 
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
@@ -100,9 +100,9 @@ class StudentProfile(models.Model):
 class AdminProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='admin_profile', on_delete=models.CASCADE)
-	image = models.ImageField(upload_to='images/admin_profiles')
-	position = models.CharField(max_length=300)
-	bio = models.TextField()
+	image = models.ImageField(upload_to='images/admin_profiles', null=True)
+	position = models.CharField(max_length=300, null=True)
+	bio = models.TextField(null=True)
 
 	#timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
