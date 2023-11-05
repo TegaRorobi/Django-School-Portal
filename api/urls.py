@@ -28,7 +28,7 @@ teacher_profile_paths = (
     re_path('^teacher-profiles/(?P<pk>\d+)/?$', TeacherProfilesViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='teacher-profile-detail'),)
 
 admin_profile_paths = (
-    re_path('^admin-profiles/?$', TeacherProfilesViewSet.as_view(LIST_CREATE), name='admin-profiles-list'),
+    re_path('^admin-profiles/?$', AdminProfilesViewSet.as_view(LIST_CREATE), name='admin-profiles-list'),
     re_path('^admin-profiles/(?P<pk>\d+)/?$', AdminProfilesViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='admin-profile-detail'),)
 
 subject_paths = (
