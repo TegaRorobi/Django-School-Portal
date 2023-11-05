@@ -28,10 +28,10 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 MASTER_ACCOUNT_PASSWORD = config('MASTER_ACCOUNT_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+DEBUG = config('DEBUG', cast=bool, default=True)
 
-ALLOWED_HOSTS = [config('PRIVATE_IP_ADDRESS'), 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['http://'+host for host in ALLOWED_HOSTS]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda hosts: [host.strip() for host in hosts.split(',')])
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda origins: [origin.strip() for origin in origins.split(',')])
 
 # Application definition
 
@@ -49,21 +49,16 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
 
     # libraries
-    'debug_toolbar',
     'rest_framework',
     'corsheaders',
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-
 ]
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -109,18 +104,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
 
@@ -152,6 +139,7 @@ AUTH_USER_MODEL = 'user.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -174,3 +162,10 @@ LOGIN_URL = '/accounts/login'
 LOGOUT_URL = '/accounts/logout'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    INTERNAL_IPS = ['127.0.0.1']
