@@ -14,7 +14,7 @@ UserModel = get_user_model()
 
 class UsersViewSet(viewsets.ModelViewSet):
 	serializer_class = UserSerializer
-	queryset = UserModel.objects.all()
+	queryset = UserModel.objects.prefetch_related('sent_messages', 'received_messages').all()
 	def get_permissions(self):
 		if self.action == 'destroy':
 			return [IsSuperUser()]
