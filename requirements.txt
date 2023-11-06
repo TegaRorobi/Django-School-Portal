@@ -1,6 +1,16 @@
-Django==4.2.1
-Pillow==9.5.0
-python-decouple==3.8
-djangorestframework==3.14.0
-django-cors-headers==3.14.0
-django-debug-toolbar==4.0.0
+# Django==4.2.1
+# Pillow==9.5.0
+# python-decouple==3.8
+# djangorestframework==3.14.0
+# django-cors-headers==3.14.0
+# django-debug-toolbar==4.0.0
+
+Django
+Pillow
+python-decouple
+djangorestframework
+djangorestframework_simplejwt
+django-cors-headers
+django-debug-toolbar
+whitenoise
+drf_yasg
