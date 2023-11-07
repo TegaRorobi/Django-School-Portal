@@ -60,8 +60,8 @@ class GradesViewSet(viewsets.ModelViewSet):
 
 
 
-	queryset = Message.objects.all()
 class AllMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+	queryset = Message.objects.prefetch_related('sender', 'receiver').all()
 	serializer_class = AllMessagesSerializer
 	permission_classes = [IsSuperUser]
 
