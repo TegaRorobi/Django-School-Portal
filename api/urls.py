@@ -40,8 +40,8 @@ grade_paths = (
     re_path('^grades/(?P<pk>\d+)/?$', GradesViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='grade-detail'),)
 
 message_paths = (
-    re_path('^messages/?$', AllMessagesViewSet.as_view(LIST_CREATE), name='messages-list'),
-    re_path('^messages/(?P<pk>\d+)/?$', AllMessagesViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='message-detail'),
+    re_path('^messages/?$', AllMessagesViewSet.as_view(LIST), name='messages-list'),
+    re_path('^messages/(?P<pk>\d+)/?$', AllMessagesViewSet.as_view(RETRIEVE), name='message-detail'),
 
     re_path('^messages/sent/?$', SentMessagesViewSet.as_view(LIST_CREATE), name='sent-messages-list'),
     re_path('^messages/sent/(?P<pk>\d+)/?$', SentMessagesViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='sent-message-detail'),
