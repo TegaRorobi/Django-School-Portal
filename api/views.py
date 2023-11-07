@@ -67,13 +67,13 @@ class AllMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
 
 
 
-class SentMessagesViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+class SentMessagesViewSet(viewsets.ModelViewSet):
 	serializer_class = SentMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def perform_create(self, serializer):
 		return serializer.save(sender=self.request.user)
 	def get_queryset(self):
-		return Message.objects.filter(sender=self.request.user).order_by('-timestamp')
+		return Message.objects.prefetch_related('receiver').filter(sender=self.request.user).order_by('-timestamp')
 
 
 
