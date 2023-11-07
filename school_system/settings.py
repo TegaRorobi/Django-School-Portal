@@ -177,15 +177,41 @@ if DEBUG:
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            # 'format': '%(asctime)+17s ... %(name)-18s : %(module)s : %(levelname)-10s : %(message)s',
+            # 'style': '%'
+            'format': '[{asctime}]  ({levelname})  -- {message}',
+            'style': '{'
+        }
+    },
     'handlers': {
-        'console': {
+        'stream': {
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+            'formatter': 'default'
         },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/activity.log',
+            'formatter': 'default'
+        },
+        'backends_filehandler': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/backends.log',
+            'formatter': 'default'
+        }
     },
     'loggers': {
+        'activity_logger': {
+            'level': 'DEBUG',
+            'handlers': ['stream', 'file']
+        },
         'django.db.backends': {
             'level': 'DEBUG',
-            'handlers': ['console'],
+            'handlers': ['backends_filehandler'],
         },
     },
 }
