@@ -81,5 +81,5 @@ class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 	serializer_class = ReceivedMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def get_queryset(self):
-		return Message.objects.filter(receiver=self.request.user).order_by('-timestamp')
+		return Message.objects.prefetch_related('sender').filter(receiver=self.request.user).order_by('-timestamp')
 

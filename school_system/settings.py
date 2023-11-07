@@ -156,7 +156,7 @@ LOGGING = {
         'default': {
             # 'format': '%(asctime)+17s ... %(name)-18s : %(module)s : %(levelname)-10s : %(message)s',
             # 'style': '%'
-            'format': '[{asctime}]  ({levelname})  -- {message}',
+            'format': '[<{asctime}>, {levelname}] {name} -> {message}',
             'style': '{'
         }
     },
@@ -185,9 +185,9 @@ LOGGING = {
             'handlers': ['stream_default', 'file_default'],
             'propagate': True,
         },
-        'django.db': {
+        "django.db.backends": {
             'level': 'DEBUG',
-            'handlers': ['stream_default', 'file_backends'],
+            'handlers': ['file_backends'],
             'propagate':True,
         },
     },
