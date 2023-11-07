@@ -23,8 +23,9 @@ ADMIN_URL = config('ADMIN_URL')
 MASTER_ACCOUNT_PASSWORD = config('MASTER_ACCOUNT_PASSWORD')
 
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda hosts: [host.strip() for host in hosts.split(',')])
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=lambda origins: [origin.strip() for origin in origins.split(',')])
+split_env_str = lambda s: [w.strip() for w in s.split(',')]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=split_env_str)
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=split_env_str)
 CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -62,9 +63,7 @@ MIDDLEWARE = [
 ]
 
 
-
 ROOT_URLCONF = 'school_system.urls'
-
 
 
 TEMPLATES = [
@@ -84,9 +83,7 @@ TEMPLATES = [
 ]
 
 
-
 WSGI_APPLICATION = 'school_system.wsgi.application'
-
 
 
 DATABASES = {
@@ -97,14 +94,12 @@ DATABASES = {
 }
 
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
-
 
 
 LANGUAGE_CODE = 'en-us'
@@ -166,18 +161,18 @@ LOGGING = {
         }
     },
     'handlers': {
-        'stream': {
+        'stream_default': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'default'
         },
-        'file': {
+        'file_default': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/activity.log',
             'formatter': 'default'
         },
-        'backends_filehandler': {
+        'file_backends': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/backends.log',
@@ -187,11 +182,13 @@ LOGGING = {
     'loggers': {
         'activity_logger': {
             'level': 'DEBUG',
-            'handlers': ['stream', 'file']
+            'handlers': ['stream_default', 'file_default'],
+            'propagate': True,
         },
-        'django.db.backends': {
+        'django.db': {
             'level': 'DEBUG',
-            'handlers': ['backends_filehandler'],
+            'handlers': ['stream_default', 'file_backends'],
+            'propagate':True,
         },
     },
 }
