@@ -44,7 +44,7 @@ class AdminProfilesViewSet(viewsets.ModelViewSet):
 
 
 class SubjectsViewSet(viewsets.ModelViewSet):
-	queryset = Subject.objects.prefetch_related('grades_taught_in').all()
+	queryset = Subject.objects.prefetch_related('grades_taught_in').order_by('label')
 	serializer_class = SubjectSerializer
 	permission_classes = [IsAdminOrSuperUserOrReadOnly]
 
