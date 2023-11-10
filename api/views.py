@@ -51,7 +51,7 @@ class SubjectsViewSet(viewsets.ModelViewSet):
 
 
 class GradesViewSet(viewsets.ModelViewSet):
-	queryset = Grade.objects.prefetch_related('subjects', 'students', 'teachers').all()
+	queryset = Grade.objects.prefetch_related('subjects', 'students', 'teachers').order_by('label')
 	serializer_class = GradeSerializer
 	def get_permissions(self):
 		if self.action == 'destroy':
