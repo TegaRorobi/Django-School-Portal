@@ -14,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool, default=True)
+USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING = config('USE_DJANGO_DEBUG_TOOLBAR_FOR_lOGGING', cast=bool, default=False)
 
 
 ADMIN_URL = config('ADMIN_URL')
@@ -156,8 +157,9 @@ LOGGING = {
         'default': {
             # 'format': '%(asctime)+17s ... %(name)-18s : %(module)s : %(levelname)-10s : %(message)s',
             # 'style': '%'
-            'format': '[<{asctime}>, {levelname}] {name} -> {message}',
-            'style': '{'
+            'format': '%(asctime)+17s ... %(name)-18s : %(levelname)-10s : %(message)s',
+            'datefmt': '%a, %d %b %I:%M:%S %p (%z)',
+            'style': '%'
         }
     },
     'handlers': {
@@ -194,7 +196,7 @@ LOGGING = {
 }
 
 
-if DEBUG:
+if DEBUG is True and USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING is True:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = ['127.0.0.1']

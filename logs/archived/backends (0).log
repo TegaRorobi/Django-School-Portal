@@ -1,0 +1,248 @@
+2023-11-06 15:32:26,579 ... django.db.backends : utils : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+2023-11-06 15:32:26,587 ... django.db.backends : utils : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+2023-11-06 15:33:08,296 ... django.db.backends : utils : DEBUG      : (0.000) SELECT COUNT(*) AS "__count" FROM "main_teacherprofile"; args=(); alias=default
+2023-11-06 15:33:08,790 ... django.db.backends : utils : DEBUG      : (0.000) SELECT "main_teacherprofile"."id", "main_teacherprofile"."user_id", "main_teacherprofile"."bio", "main_teacherprofile"."image", "main_teacherprofile"."qualifications", "main_teacherprofile"."date_created", "main_teacherprofile"."last_modified" FROM "main_teacherprofile" LIMIT 1; args=(); alias=default
+2023-11-06 15:33:08,794 ... django.db.backends : utils : DEBUG      : (0.000) SELECT ("main_teacherprofile_grades"."teacherprofile_id") AS "_prefetch_related_val_teacherprofile_id", "main_grade"."id", "main_grade"."label" FROM "main_grade" INNER JOIN "main_teacherprofile_grades" ON ("main_grade"."id" = "main_teacherprofile_grades"."grade_id") WHERE "main_teacherprofile_grades"."teacherprofile_id" IN (1); args=(1,); alias=default
+2023-11-06 15:33:08,797 ... django.db.backends : utils : DEBUG      : (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" IN (3); args=(3,); alias=default
+2023-11-06 15:33:08,800 ... django.db.backends : utils : DEBUG      : (0.000) SELECT ("main_teacherprofile_subject_specializations"."teacherprofile_id") AS "_prefetch_related_val_teacherprofile_id", "main_subject"."id", "main_subject"."label" FROM "main_subject" INNER JOIN "main_teacherprofile_subject_specializations" ON ("main_subject"."id" = "main_teacherprofile_subject_specializations"."subject_id") WHERE "main_teacherprofile_subject_specializations"."teacherprofile_id" IN (1); args=(1,); alias=default
+[2023-11-06 15:35:56,391] django.db.backends <DEBUG> (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-06 15:35:56,398] django.db.backends <DEBUG> (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-06 15:45:27,921] django.db.backends [DEBUG] - (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-06 15:45:27,927] django.db.backends [DEBUG] - (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-06 15:45:43,071] django.db.backends [DEBUG] - (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-06 15:45:43,078] django.db.backends [DEBUG] - (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-06 15:45:55,362] django.db.backends [DEBUG] - (0.016) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" = 1 LIMIT 21; args=(1,); alias=default
+[2023-11-06 15:45:55,826] django.db.backends [DEBUG] - (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."sender_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-06 15:45:55,826] django.db.backends [DEBUG] - (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."sender_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-06 16:43:47,956]  (DEBUG)  -- (0.016) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-06 16:43:47,962]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-06 16:45:28,352]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" = 1 LIMIT 21; args=(1,); alias=default
+[2023-11-06 16:45:28,824]  (DEBUG)  -- (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."sender_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-06 16:45:28,830]  (DEBUG)  -- (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."receiver_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-07 10:49:09,096]  (DEBUG)  -- (0.015) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 10:49:09,104]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 10:49:53,231]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" = 1 LIMIT 21; args=(1,); alias=default
+[2023-11-07 10:49:53,787]  (DEBUG)  -- (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."sender_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-07 10:49:53,790]  (DEBUG)  -- (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."receiver_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-07 10:50:20,968]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" = 1 LIMIT 21; args=(1,); alias=default
+[2023-11-07 10:50:20,977]  (DEBUG)  -- (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."sender_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-07 10:50:20,980]  (DEBUG)  -- (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" WHERE "main_message"."receiver_id" IN (1) ORDER BY "main_message"."timestamp" DESC; args=(1,); alias=default
+[2023-11-07 11:24:44,152]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 11:24:44,158]  (DEBUG)  -- (0.016) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 11:26:40,506]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 11:26:40,511]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 11:27:01,182]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 11:27:01,188]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 11:27:52,998]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."email" = 'rorobitega@gmail.com' LIMIT 21; args=('rorobitega@gmail.com',); alias=default
+[2023-11-07 11:28:22,722]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."email" = 'admin@django.site' LIMIT 21; args=('admin@django.site',); alias=default
+[2023-11-07 11:28:23,626]  (DEBUG)  -- (0.000) INSERT INTO "token_blacklist_outstandingtoken" ("user_id", "jti", "token", "created_at", "expires_at") VALUES (2, '5ff9171a642b4096988fe6f6618e16bb', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5OTQzOTMwMywiaWF0IjoxNjk5MzUyOTAzLCJqdGkiOiI1ZmY5MTcxYTY0MmI0MDk2OTg4ZmU2ZjY2MThlMTZiYiIsInVzZXJfaWQiOjJ9.rnNDMAABKdV4iEfytIzhZYS6XqzIX1Yl97npblP1tT8', '2023-11-07 10:28:23.600424', '2023-11-08 10:28:23') RETURNING "token_blacklist_outstandingtoken"."id"; args=(2, '5ff9171a642b4096988fe6f6618e16bb', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5OTQzOTMwMywiaWF0IjoxNjk5MzUyOTAzLCJqdGkiOiI1ZmY5MTcxYTY0MmI0MDk2OTg4ZmU2ZjY2MThlMTZiYiIsInVzZXJfaWQiOjJ9.rnNDMAABKdV4iEfytIzhZYS6XqzIX1Yl97npblP1tT8', '2023-11-07 10:28:23.600424', '2023-11-08 10:28:23'); alias=default
+[2023-11-07 11:28:53,431]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" = 2 LIMIT 21; args=(2,); alias=default
+[2023-11-07 11:28:53,471]  (DEBUG)  -- (0.015) SELECT COUNT(*) AS "__count" FROM "main_message"; args=(); alias=default
+[2023-11-07 11:54:02,037]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 11:54:02,047]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 11:54:30,047]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 11:54:30,053]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 12:00:56,309]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 12:00:56,315]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 12:03:09,769]  (DEBUG)  -- (0.015) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 12:03:09,774]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 12:14:25,775]  (DEBUG)  -- (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."email" = 'admin@django.site' LIMIT 21; args=('admin@django.site',); alias=default
+[2023-11-07 12:14:27,167]  (DEBUG)  -- (0.000) INSERT INTO "token_blacklist_outstandingtoken" ("user_id", "jti", "token", "created_at", "expires_at") VALUES (2, 'd7d80a34310544398dabd01d8e8e85ca', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5OTYxNDg2NywiaWF0IjoxNjk5MzU1NjY3LCJqdGkiOiJkN2Q4MGEzNDMxMDU0NDM5OGRhYmQwMWQ4ZThlODVjYSIsInVzZXJfaWQiOjJ9.PtI1-NM5f2Bvx8XXc3jTGSg4TVz5dYK8VdNHOgdkGgo', '2023-11-07 11:14:27.133348', '2023-11-10 11:14:27') RETURNING "token_blacklist_outstandingtoken"."id"; args=(2, 'd7d80a34310544398dabd01d8e8e85ca', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5OTYxNDg2NywiaWF0IjoxNjk5MzU1NjY3LCJqdGkiOiJkN2Q4MGEzNDMxMDU0NDM5OGRhYmQwMWQ4ZThlODVjYSIsInVzZXJfaWQiOjJ9.PtI1-NM5f2Bvx8XXc3jTGSg4TVz5dYK8VdNHOgdkGgo', '2023-11-07 11:14:27.133348', '2023-11-10 11:14:27'); alias=default
+[2023-11-07 15:40:15,552]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 15:40:15,560]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:07:07,494]  (DEBUG)  -- (0.016) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:07:07,501]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:13:10,782]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:13:10,788]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:25:54,402]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:26:32,929]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:26:32,935]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:27:58,578]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:27:58,583]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:34:03,386]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:34:03,392]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:35:47,622] django.db.backends (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:35:47,627] django.db.backends (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 16:39:54,049] django.db.backends (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 16:39:54,056] django.db.backends (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:06:09,945]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:06:09,951]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:06:23,329]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:06:23,335]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:07:06,372]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:07:06,378]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:07:32,693]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:07:32,700]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:07:54,084]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:07:54,093]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:09:28,972]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:09:28,978]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:10:17,319]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:10:17,326]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:14:31,616]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:14:31,623]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:23:39,843]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:23:39,851]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:24:19,298]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:24:19,304]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 17:25:13,843]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 17:25:13,850]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 19:50:21,185]  (DEBUG)  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 19:50:21,193]  (DEBUG)  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 19:56:28,074 :: utils :: django.db.backends :: DEBUG]  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 19:56:28,081 :: utils :: django.db.backends :: DEBUG]  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[2023-11-07 19:57:32,654 :: utils :: django.db.backends :: DEBUG]  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[2023-11-07 19:57:32,660 :: utils :: django.db.backends :: DEBUG]  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+django.db.backends: [DEBUG log at 2023-11-07 20:02:23,406, module utils]  -- (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+django.db.backends: [DEBUG log at 2023-11-07 20:02:23,414, module utils]  -- (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+django.db.backends: [DEBUG log at 2023-11-07 20:02:33,536, module utils]  - (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+django.db.backends: [DEBUG log at 2023-11-07 20:02:33,545, module utils]  - (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[DEBUG log at  <2023-11-07 20:04:11,209>, module utils] django.db.backends  : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[DEBUG log at  <2023-11-07 20:04:11,216>, module utils] django.db.backends  : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[DEBUG <2023-11-07 20:05:51,206>, module utils] django.db.backends  : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[DEBUG <2023-11-07 20:05:51,216>, module utils] django.db.backends  : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[DEBUG <2023-11-07 20:06:32,756>, utils] django.db.backends  : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[DEBUG <2023-11-07 20:06:32,767>, utils] django.db.backends  : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[DEBUG <2023-11-07 20:07:04,672>, utils] django.db.backends -> (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[DEBUG <2023-11-07 20:07:04,679>, utils] django.db.backends -> (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[<2023-11-07 20:07:42,204>, DEBUG] django.db.backends -> (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[<2023-11-07 20:07:42,211>, DEBUG] django.db.backends -> (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[<2023-11-07 21:05:14,310>, DEBUG] django.db.backends -> (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[<2023-11-07 21:05:14,317>, DEBUG] django.db.backends -> (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+[<2023-11-07 21:05:32,692>, DEBUG] django.db.backends -> (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+[<2023-11-07 21:05:32,699>, DEBUG] django.db.backends -> (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
