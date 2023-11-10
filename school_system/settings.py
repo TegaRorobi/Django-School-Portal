@@ -14,8 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool, default=True)
-USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING = config('USE_DJANGO_DEBUG_TOOLBAR_FOR_lOGGING', cast=bool, default=False)
 
+USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING = config('USE_DJANGO_DEBUG_TOOLBAR_FOR_lOGGING', cast=bool, default=False)
+STREAM_BACKEND_LOGS_TO_CONSOLE = config('STREAM_BACKEND_LOGS_TO_CONSOLE', cast=bool, default=False)
 
 ADMIN_URL = config('ADMIN_URL')
 
@@ -200,3 +201,6 @@ if DEBUG is True and USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING is True:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = ['127.0.0.1']
+
+if STREAM_BACKEND_LOGS_TO_CONSOLE is True:
+    LOGGING['loggers']['django.db.backends']['handlers'].append('stream_default')
