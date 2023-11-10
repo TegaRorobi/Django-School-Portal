@@ -31,7 +31,7 @@ class StudentProfilesViewSet(viewsets.ModelViewSet):
 
 class TeacherProfilesViewSet(viewsets.ModelViewSet):
 	serializer_class = TeacherProfileSerializer
-	queryset = TeacherProfile.objects.prefetch_related('grades', 'user', 'subject_specializations').all()
+	queryset = TeacherProfile.objects.prefetch_related('grades', 'user', 'subject_specializations').order_by('-id')
 	permission_classes = [IsAdminOrSuperUserOrOwnerOrReadOnly]
 
 
