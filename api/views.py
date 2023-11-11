@@ -84,7 +84,10 @@ class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 		return Message.objects.prefetch_related('sender').filter(receiver=self.request.user).order_by('-timestamp')
 
 
-class TermViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class TermViewSet(
+	mixins.ListModelMixin, mixins.CreateModelMixin, 
+	mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
+	viewsets.GenericViewSet):
 	queryset = Term.objects.all().order_by('-start_date')
 	serializer_class = TermSerializer
 	permission_classes = [IsSuperUserOrReadOnly]
