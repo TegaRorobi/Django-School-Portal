@@ -157,3 +157,28 @@ Fri, 10 Nov 02:32:39 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SE
 Fri, 10 Nov 02:32:39 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "main_message"."id", "main_message"."sender_id", "main_message"."receiver_id", "main_message"."content", "main_message"."timestamp" FROM "main_message" ORDER BY "main_message"."timestamp" DESC LIMIT 2; args=(); alias=default
 Fri, 10 Nov 02:32:39 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" IN (2); args=(2,); alias=default
 Fri, 10 Nov 02:32:39 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "user_user"."id", "user_user"."password", "user_user"."last_login", "user_user"."is_superuser", "user_user"."first_name", "user_user"."last_name", "user_user"."is_staff", "user_user"."is_active", "user_user"."date_joined", "user_user"."name", "user_user"."email", "user_user"."gender", "user_user"."dob", "user_user"."address", "user_user"."phone", "user_user"."passkey", "user_user"."is_student", "user_user"."is_teacher", "user_user"."is_admin" FROM "user_user" WHERE "user_user"."id" IN (3, 5); args=(3, 5); alias=default
+Sat, 11 Nov 01:24:32 PM (+0100) ... django.db.backends : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat, 11 Nov 01:24:32 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Sat, 11 Nov 01:26:56 PM (+0100) ... django.db.backends : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat, 11 Nov 01:26:56 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Sat, 11 Nov 01:30:30 PM (+0100) ... django.db.backends : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat, 11 Nov 01:30:30 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Sat, 11 Nov 01:31:51 PM (+0100) ... django.db.backends : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat, 11 Nov 01:31:51 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Sat, 11 Nov 01:34:41 PM (+0100) ... django.db.backends : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat, 11 Nov 01:34:41 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default

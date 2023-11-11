@@ -196,7 +196,11 @@ LOGGING = {
     },
 }
 
-
+"""
+USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING is named as such, because, the debug toolbar middleware
+intercepts the logs, and affects the logging configured in the LOGGING setting. Therefore, this
+name is used to show the tradeoff between both settings.
+"""
 if DEBUG is True and USE_DJANGO_DEBUG_TOOLBAR_FOR_LOGGING is True:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
