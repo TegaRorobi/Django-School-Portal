@@ -30,7 +30,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     # admin
-    path(settings.ADMIN_URL, admin.site.urls),
+    re_path(f"^{settings.ADMIN_URL.strip()}/?", admin.site.urls),
 
     # urlconfs
     path('', include('main.urls')),
