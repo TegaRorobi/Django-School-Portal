@@ -159,7 +159,7 @@ LOGGING = {
             # 'format': '%(asctime)+17s ... %(name)-18s : %(module)s : %(levelname)-10s : %(message)s',
             # 'style': '%'
             'format': '%(asctime)+17s ... %(name)-18s : %(levelname)-10s : %(message)s',
-            'datefmt': '%a, %d %b %I:%M:%S %p (%z)',
+            'datefmt': '%a %d %b, %Y. %I:%M:%S %p (%z)',
             'style': '%'
         }
     },
