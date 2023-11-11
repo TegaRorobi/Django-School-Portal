@@ -1,7 +1,6 @@
 from django.db import models, IntegrityError
 from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
-import datetime
 
 UserModel = get_user_model()
 
@@ -38,9 +37,9 @@ class Grade(models.Model):
 class TeacherProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='teacher_profile', on_delete=models.CASCADE)
-	bio = models.TextField(_('Biography'), null=True)
-	image = models.ImageField(upload_to='images/teacher_profiles', null=True)
+	image = models.ImageField(upload_to='images/teacher_profiles', null=True, blank=True)
 	grades = models.ManyToManyField(Grade, related_name='teachers')
+	bio = models.TextField(_('Biography'), default='Teacher @ the school portal.', null=True)
 
 	qualifications = models.CharField(max_length=500, null=True)
 	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers')
@@ -65,10 +64,11 @@ class TeacherProfile(models.Model):
 class StudentProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='student_profile', on_delete=models.CASCADE)
-	image = models.ImageField(upload_to='images/student_profiles', null=True)
+	image = models.ImageField(upload_to='images/student_profiles', null=True, blank=True)
 	grade = models.ForeignKey(Grade, related_name='students', on_delete=models.PROTECT)
 	subjects = models.ManyToManyField(Subject, related_name='offering_students')
-
+	bio = models.TextField(_('Biography'), default='Student @ the school portal.')\
+	
 	# timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
 	last_modified = models.DateTimeField(auto_now=True)
@@ -100,9 +100,10 @@ class StudentProfile(models.Model):
 class AdminProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='admin_profile', on_delete=models.CASCADE)
-	image = models.ImageField(upload_to='images/admin_profiles', null=True)
-	position = models.CharField(max_length=300, null=True)
-	bio = models.TextField(null=True)
+	image = models.ImageField(upload_to='images/admin_profiles', null=True, blank=True)
+	bio = models.TextField(_('Biography'), default="Site admin @ the school portal.")
+
+	position = models.CharField(max_length=300, null=True, blank=True)
 
 	#timestamps
 	date_created = models.DateTimeField(auto_now_add=True)
@@ -143,7 +144,8 @@ class TermReport(models.Model):
 	student = models.ForeignKey(StudentProfile, related_name='term_reports', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, related_name='term_reports', on_delete=models.CASCADE)
 	term = models.CharField(max_length=6, choices=TERM_CHOICES)
-	remark = models.CharField(max_length=200, null=True, blank=True)
+	remark = models.CharField(max_length=200, default="Awaiting remark...")
+
 
 	#timestamps
 	last_modified = models.DateTimeField(auto_now=True)
@@ -159,12 +161,14 @@ class TermReport(models.Model):
 
 
 
-class Result(models.Model):
-	term_report = models.ForeignKey(TermReport, related_name='results', on_delete=models.CASCADE)
+class SubjectResult(models.Model):
+	term_report = models.ForeignKey(TermReport, related_name='results', on_delete=models.CASCADE, null=True, blank=True)
+	student = models.ForeignKey(StudentProfile, related_name='subject_results', on_delete=models.CASCADE)
 	subject = models.ForeignKey(Subject, related_name='student_scores', on_delete=models.CASCADE)
-	first_test = models.IntegerField()
-	second_test = models.IntegerField()
-	exam = models.IntegerField()
+	grade = models.ForeignKey(Grade, on_delete=models.CASCADE, null=True, blank=True)
+	first_test = models.IntegerField(default=0)
+	second_test = models.IntegerField(default=0)
+	exam = models.IntegerField(default=0)
 
 	#timestamps
 	last_modified = models.DateTimeField(auto_now=True)
