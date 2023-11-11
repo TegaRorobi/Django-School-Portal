@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Grade, TeacherProfile, StudentProfile, AdminProfile
+from .models import *
 
 admin.site.register(Subject)
 admin.site.register(Grade)
@@ -29,3 +29,8 @@ class StudentProfileAdmin(admin.ModelAdmin):
 class AdminprofileAdmin(admin.ModelAdmin):
 	model = AdminProfile 
 	list_display = ['user', 'image', 'position']
+
+@admin.register(Term)
+class TermAdmin(admin.ModelAdmin):
+	model = Term 
+	list_display = ['label', 'start_date', 'end_date']

@@ -146,9 +146,10 @@ class Term(models.Model):
 	end_date = models.DateField()
 
 	def __str__(self) -> str:
-		return f"{self.label.title()} term, starts {self.start_date.strftime('%a, %d %b %Y')} "
-		f"and ends {self.end_date.strftime('%a, %d %b %Y')}"
-
+		return (
+			f"{self.label.title()} term,"
+			f"{self.start_date.strftime('%a, %d %b %Y')} -> "
+			f"{self.end_date.strftime('%a, %d %b %Y')}")
 
 class TermReport(models.Model):
 	TERM_CHOICES = (('first', 'first'), ('second', 'second'), ('third', 'third'))
