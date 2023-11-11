@@ -151,14 +151,12 @@ class Term(models.Model):
 			f"{self.start_date.strftime('%a, %d %b %Y')} -> "
 			f"{self.end_date.strftime('%a, %d %b %Y')}")
 
-class TermReport(models.Model):
-	TERM_CHOICES = (('first', 'first'), ('second', 'second'), ('third', 'third'))
 
+class StudentTermReport(models.Model):
 	student = models.ForeignKey(StudentProfile, related_name='term_reports', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, related_name='term_reports', on_delete=models.CASCADE)
-	term = models.CharField(max_length=6, choices=TERM_CHOICES)
+	term = models.ForeignKey(Term, related_name='student_reports', on_delete=models.CASCADE)
 	remark = models.CharField(max_length=200, default="Awaiting remark...")
-
 
 	#timestamps
 	last_modified = models.DateTimeField(auto_now=True)
@@ -173,9 +171,8 @@ class TermReport(models.Model):
 		return total/num_results
 
 
-
 class SubjectResult(models.Model):
-	term_report = models.ForeignKey(TermReport, related_name='results', on_delete=models.CASCADE, null=True, blank=True)
+	term_report = models.ForeignKey(StudentTermReport, related_name='results', on_delete=models.CASCADE, null=True, blank=True)
 	student = models.ForeignKey(StudentProfile, related_name='subject_results', on_delete=models.CASCADE)
 	subject = models.ForeignKey(Subject, related_name='student_scores', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, on_delete=models.CASCADE, null=True, blank=True)

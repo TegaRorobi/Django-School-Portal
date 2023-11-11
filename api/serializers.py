@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from main.models import *
-from rest_framework import permissions 
-from .permissions import *
 
 UserModel = get_user_model()
 
@@ -74,7 +72,7 @@ class ReceivedMessageSerializer(serializers.ModelSerializer):
 
 class TermReportSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = TermReport
+		model = StudentTermReport
 		fields = '__all__'
 
 
