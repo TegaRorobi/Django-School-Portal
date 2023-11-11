@@ -938,3 +938,13 @@ Sat 11 Nov, 2023. 07:53:31 PM (+0100) ... django.db.backends : DEBUG      : (0.0
             WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
             ORDER BY name; args=None; alias=default
 Sat 11 Nov, 2023. 07:53:31 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Sat 11 Nov, 2023. 08:23:37 PM (+0100) ... django.db.backends : DEBUG      : (0.016) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat 11 Nov, 2023. 08:23:37 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Sat 11 Nov, 2023. 08:24:56 PM (+0100) ... django.db.backends : DEBUG      : (0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+Sat 11 Nov, 2023. 08:24:56 PM (+0100) ... django.db.backends : DEBUG      : (0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default

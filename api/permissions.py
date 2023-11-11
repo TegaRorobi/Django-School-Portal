@@ -8,6 +8,13 @@ class IsSuperUser(permissions.BasePermission):
 		return bool(request.user and request.user.is_authenticated and request.user.is_superuser)
 
 
+class IsSuperUserOrReadOnly(permissions.BasePermission):
+	"Custom permission that grants edit access only to SuperUsers"
+
+	def has_permission(self, request, view):
+		return bool(request.method in permissions.SAFE_METHODS or 
+			(request.user and request.user.is_authenticated and request.user.is_superuser))
+
 
 class IsAdminOrSuperUser(permissions.BasePermission):
 	"Custom permission that checks if a user is an AdminUser (is_staff=True) or SuperUser (is_superuser=True)"
