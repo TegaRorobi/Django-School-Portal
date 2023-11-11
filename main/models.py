@@ -138,6 +138,18 @@ class Message(models.Model):
 		return f"{self.sender} -> {self.receiver}"
 
 
+class Term(models.Model):
+	LABEL_CHOICES = (('first', 'First'), ('second', 'Second'), ('third', 'Third'))
+
+	label = models.CharField(max_length=6, choices=LABEL_CHOICES)
+	start_date = models.DateField()
+	end_date = models.DateField()
+
+	def __str__(self) -> str:
+		return f"{self.label.title()} term, starts {self.start_date.strftime('%a, %d %b %Y')} "
+		f"and ends {self.end_date.strftime('%a, %d %b %Y')}"
+
+
 class TermReport(models.Model):
 	TERM_CHOICES = (('first', 'first'), ('second', 'second'), ('third', 'third'))
 
