@@ -78,7 +78,7 @@ class TermReportSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 
-class ResultSerializer(serializers.ModelSerializer):
+class SubjectResultSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Result
+		model = SubjectResult
 		fields = '__all__'
