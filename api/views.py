@@ -112,6 +112,10 @@ class SentMessagesViewSet(viewsets.ModelViewSet):
 
 
 class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+
+	"API Vievset to perform read operations on received messages, i.e getting all received messages, "\
+	"retrieving the detail of a specific received message."
+	
 	serializer_class = ReceivedMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def get_queryset(self):
