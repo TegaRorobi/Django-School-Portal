@@ -61,6 +61,10 @@ class AdminProfilesViewSet(viewsets.ModelViewSet):
 
 
 class SubjectsViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to get all subjects, retrieve a specific subject, create a new subject, "\
+	"update an existing one, as well as deleting one."
+
 	queryset = Subject.objects.prefetch_related('grades_taught_in').order_by('label')
 	serializer_class = SubjectSerializer
 	permission_classes = [IsAdminOrSuperUserOrReadOnly]
