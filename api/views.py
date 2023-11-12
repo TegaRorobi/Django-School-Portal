@@ -86,6 +86,11 @@ class GradesViewSet(viewsets.ModelViewSet):
 
 
 class AllMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+
+	"API Viewset to get all messages and retrieve a specific message. "\
+	"Note: This viewset may not be applicable in the final application, it may be terminated "\
+	"as a superuser being able to view all user messages may have ethical issues."
+
 	queryset = Message.objects.prefetch_related('sender', 'receiver').order_by('-timestamp')
 	serializer_class = AllMessagesSerializer
 	permission_classes = [IsSuperUser]
