@@ -72,6 +72,10 @@ class SubjectsViewSet(viewsets.ModelViewSet):
 
 
 class GradesViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to get all grades, retrieve a specific grade's details, "\
+	"create a new grade, and also update and delete existing grades."
+
 	queryset = Grade.objects.prefetch_related('subjects', 'students', 'teachers').order_by('label')
 	serializer_class = GradeSerializer
 	def get_permissions(self):
