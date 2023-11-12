@@ -15,7 +15,7 @@ UserModel = get_user_model()
 class UsersViewSet(viewsets.ModelViewSet):
 
 	"API Viewset to get all users, retrieve details of a specific user, "\
-	"create a new user, update an existing user, as well as delete a user"
+	"create a new user, update an existing user, as well as delete a user."
 
 	serializer_class = UserSerializer
 	queryset = UserModel.objects.prefetch_related('sent_messages', 'received_messages').order_by('-id')
@@ -28,6 +28,10 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 
 class StudentProfilesViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to get all student profiles, retrieve details of a specific student profile, "\
+	"create a new student profile, update an existing student profile and also delete a student profile."
+
 	serializer_class = StudentProfileSerializer
 	queryset = StudentProfile.objects.prefetch_related('user', 'subjects').order_by('-id')
 	permission_classes = [IsAdminOrSuperUserOrOwnerOrReadOnly]
