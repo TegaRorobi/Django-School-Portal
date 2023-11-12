@@ -98,6 +98,10 @@ class AllMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
 
 
 class SentMessagesViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to get all sent messages of a particular user (the currently authenticated user), "\
+	"retrieve specific messages, send new messages to other people, as well as update and delete them."
+
 	serializer_class = SentMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def perform_create(self, serializer):
