@@ -5,15 +5,15 @@ Detailed Documentation of the API's endpoints, as well as others concepts.
 ---
 
 # Table of Contents
-- [API Overview](#API%20Overview)
-    - [Authentication](#Authentication)
-    - [Users](#Users)
-    - [Student Profiles](#Student%20Profiles)
-    - [Teacher Profiles](#Teacher%20Profiles)
-    - [Admin Profiles](#Admin%20Profiles)
-    - [Subjects](#Subjects)
-    - [Grades](#Grades)
-    - [Messages](#Messages)
+- [API Overview](#api-overview)
+    - [Authentication](#authentication)
+    - [Users](#users)
+    - [Student Profiles](#student-profiles)
+    - [Teacher Profiles](#teacher-profiles)
+    - [Admin Profiles](#admin-profiles)
+    - [Subjects](#subjects)
+    - [Grades](#grades)
+    - [Messages](#messages)
 
 
 ## API Overview 🔬
