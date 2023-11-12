@@ -50,8 +50,8 @@ message_paths = (
     re_path('^messages/received/(?P<pk>\d+)/?$', ReceivedMessagesViewSet.as_view(RETRIEVE), name='received-message-detail'),)
 
 term_paths = (
-    re_path('^terms/?$', TermViewSet.as_view(LIST_CREATE), name='terms-list'),
-    re_path('^terms/(?P<pk>\d+)/?$', TermViewSet.as_view(RETRIEVE_UPDATE), name='term-detail'),
+    re_path('^terms/?$', TermsViewSet.as_view(LIST_CREATE), name='terms-list'),
+    re_path('^terms/(?P<pk>\d+)/?$', TermsViewSet.as_view(RETRIEVE_UPDATE), name='term-detail'),
 )
 
 

@@ -115,17 +115,20 @@ class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 
 	"API Vievset to perform read operations on received messages, i.e getting all received messages, "\
 	"retrieving the detail of a specific received message."
-	
+
 	serializer_class = ReceivedMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def get_queryset(self):
 		return Message.objects.prefetch_related('sender').filter(receiver=self.request.user).order_by('-timestamp')
 
 
-class TermViewSet(
+class TermsViewSet(
 	mixins.ListModelMixin, mixins.CreateModelMixin, 
 	mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
 	viewsets.GenericViewSet):
+
+	"API Viewset to list out all terms, create new terms, retrieve and update the details of a term."
+
 	queryset = Term.objects.all().order_by('-start_date')
 	serializer_class = TermSerializer
 	permission_classes = [IsSuperUserOrReadOnly]
