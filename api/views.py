@@ -50,6 +50,10 @@ class TeacherProfilesViewSet(viewsets.ModelViewSet):
 
 
 class AdminProfilesViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to get all admin profiles, retrieve the details of a specific admin profile, "\
+	"create a new admin profile, update an existing admin profile and also delete an admin profile."
+
 	serializer_class = AdminProfileSerializer
 	queryset = AdminProfile.objects.prefetch_related('user').order_by('-id')
 	permission_classes = [IsSuperUserOrOwnerOrReadOnly]
