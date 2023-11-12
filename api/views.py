@@ -13,8 +13,13 @@ UserModel = get_user_model()
 
 
 class UsersViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to get all users, retrieve details of a specific user, "\
+	"create a new user, update an existing user, as well as delete a user"
+
 	serializer_class = UserSerializer
 	queryset = UserModel.objects.prefetch_related('sent_messages', 'received_messages').order_by('-id')
+
 	def get_permissions(self):
 		if self.action == 'destroy':
 			return [IsSuperUser()]
