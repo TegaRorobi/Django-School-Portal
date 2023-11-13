@@ -36,7 +36,7 @@ Here are the steps to getting this API up and running:
 
 1.  Open your favourite terminal and navigate to a suitable directory.  
 
-    ```
+    ```bash
     cd path/to/suitable/directory/
     ```
 
