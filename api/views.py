@@ -3,9 +3,8 @@ from .serializers import *
 from main.models import *
 from .permissions import *
 
-from rest_framework.decorators import api_view
+from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
-from rest_framework import viewsets, permissions, mixins
 
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
@@ -104,8 +103,39 @@ class SentMessagesViewSet(viewsets.ModelViewSet):
 
 	serializer_class = SentMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
+
+	def list(self, request, *args, **kwargs):
+		queryset = self.get_queryset()
+
+		if 'receiver_id' in request.query_params or 'to' in request.query_params:
+			param = 'to' if 'to' in request.query_params else 'receiver_id'
+			try:
+				receiver_id = int(request.query_params.get(param))
+				receiver = UserModel.objects.get(id=int(receiver_id))
+			except ValueError:
+				return Response({
+					"error": f"Invalid '{param}' parameter. Expected an integer."
+				}, status=status.HTTP_400_BAD_REQUEST)
+			except UserModel.DoesNotExist:
+				return Response({
+					'error': f"Invalid '{param}' parameter. User with id '{receiver_id}' not found."
+				}, status=status.HTTP_404_NOT_FOUND)
+			
+			queryset = queryset.filter(receiver=receiver)
+
+		queryset = self.filter_queryset(queryset)
+
+		page = self.paginate_queryset(queryset)
+		if page is not None:
+			serializer = self.get_serializer(page, many=True)
+			return self.get_paginated_response(serializer.data)
+
+		serializer = self.get_serializer(queryset, many=True)
+		return Response(serializer.data)
+	
 	def perform_create(self, serializer):
 		return serializer.save(sender=self.request.user)
+	
 	def get_queryset(self):
 		return Message.objects.prefetch_related('receiver').filter(sender=self.request.user).order_by('-timestamp')
 
