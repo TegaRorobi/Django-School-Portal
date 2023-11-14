@@ -9,9 +9,9 @@ class BaseModel(models.Model):
         abstract = True
 
     @classmethod
-    def new(cls, *args, **kwargs) -> models.Model:
+    def new(cls, **kwargs) -> models.Model:
         "Create and save a new model instance"
-        ins = cls.objects.create(*args, **kwargs)
+        ins = cls.objects.create(**kwargs)
         return ins
 
     def update(self, **kwargs) -> None:
