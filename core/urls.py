@@ -1,5 +1,5 @@
 """
-URL configuration for school_system project.
+URL configuration for core project.
 """
 
 

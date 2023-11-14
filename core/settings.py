@@ -1,5 +1,5 @@
 """
-Django settings for school_system project.
+Django settings for core project.
 
 """
 
@@ -66,7 +66,7 @@ MIDDLEWARE = [
 ]
 
 
-ROOT_URLCONF = 'school_system.urls'
+ROOT_URLCONF = 'core.urls'
 
 
 TEMPLATES = [
@@ -86,7 +86,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'school_system.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 DATABASES = {
