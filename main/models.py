@@ -1,11 +1,13 @@
 from django.db import models, IntegrityError
 from django.utils.translation import gettext as _
-from django.contrib.auth import get_user_model
 
+from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 
+from base.models import BaseModel
 
-class Subject(models.Model):
+
+class Subject(BaseModel):
 
 	label = models.CharField(max_length=100, null=False, blank=False)
 
@@ -14,7 +16,7 @@ class Subject(models.Model):
 
 
 
-class Grade(models.Model):
+class Grade(BaseModel):
 
 	GRADE_LABEL_CHOICES = [
 		('Kindergarten 1', 'Kindergarten 1'),
@@ -35,7 +37,7 @@ class Grade(models.Model):
 
 
 
-class TeacherProfile(models.Model):
+class TeacherProfile(BaseModel):
 
 	user = models.OneToOneField(UserModel, related_name='teacher_profile', on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='images/teacher_profiles', null=True, blank=True)
@@ -44,10 +46,6 @@ class TeacherProfile(models.Model):
 
 	qualifications = models.CharField(max_length=500, null=True)
 	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers')
-
-	# timestamps
-	date_created = models.DateTimeField(auto_now_add=True)
-	last_modified = models.DateTimeField(auto_now=True)
 
 	def save(self, *args, **kwargs):
 		if self.user.is_student:
@@ -62,7 +60,7 @@ class TeacherProfile(models.Model):
 
 
 
-class StudentProfile(models.Model):
+class StudentProfile(BaseModel):
 
 	user = models.OneToOneField(UserModel, related_name='student_profile', on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='images/student_profiles', null=True, blank=True)
@@ -70,10 +68,6 @@ class StudentProfile(models.Model):
 	subjects = models.ManyToManyField(Subject, related_name='offering_students')
 	bio = models.TextField(_('Biography'), default='Student @ the school portal.')\
 	
-	# timestamps
-	date_created = models.DateTimeField(auto_now_add=True)
-	last_modified = models.DateTimeField(auto_now=True)
-
 	def save(self, *args, **kwargs):
 		try:
 			if self.user.teacher_profile:
@@ -96,7 +90,7 @@ class StudentProfile(models.Model):
 
 
 
-class AdminProfile(models.Model):
+class AdminProfile(BaseModel):
 
 	user = models.OneToOneField(UserModel, related_name='admin_profile', on_delete=models.CASCADE)
 	image = models.ImageField(upload_to='images/admin_profiles', null=True, blank=True)
@@ -104,11 +98,6 @@ class AdminProfile(models.Model):
 
 	position = models.CharField(max_length=300, null=True, blank=True)
 
-	#timestamps
-	date_created = models.DateTimeField(auto_now_add=True)
-	last_modified = models.DateTimeField(auto_now=True)
-
-	
 	def save(self, *args, **kwargs):
 		if self.user.is_student:
 			# log an error message
@@ -122,23 +111,21 @@ class AdminProfile(models.Model):
 
 
 
-class Message(models.Model):
+class Message(BaseModel):
 
 	sender = models.ForeignKey(UserModel, related_name='sent_messages', on_delete=models.CASCADE)
 	receiver = models.ForeignKey(UserModel, related_name='received_messages', on_delete=models.CASCADE)
 	content = models.TextField()
 
-	timestamp = models.DateTimeField(auto_now_add=True)
-
 	class Meta:
-		ordering = ['-timestamp']
+		ordering = ['-date_created']
 
 	def __str__(self):
 		return f"{self.sender} -> {self.receiver}"
 
 
 
-class Term(models.Model):
+class Term(BaseModel):
 
 	LABEL_CHOICES = [
 		('first', 'First'), 
@@ -158,16 +145,12 @@ class Term(models.Model):
 
 
 
-class StudentTermReport(models.Model):
+class StudentTermReport(BaseModel):
 
 	student = models.ForeignKey(StudentProfile, related_name='term_reports', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, related_name='term_reports', on_delete=models.CASCADE)
 	term = models.ForeignKey(Term, related_name='student_reports', on_delete=models.CASCADE)
 	remark = models.CharField(max_length=200, default="Awaiting remark...")
-
-	#timestamps
-	last_modified = models.DateTimeField(auto_now=True)
-	date_created = models.DateTimeField(auto_now_add=True)
 
 	def average(self):
 		# O(n) time, O(1) space
@@ -179,20 +162,16 @@ class StudentTermReport(models.Model):
 
 
 
-class SubjectResult(models.Model):
+class SubjectResult(BaseModel):
 
 	term_report = models.ForeignKey(StudentTermReport, related_name='results', on_delete=models.CASCADE, null=True, blank=True)
 	student = models.ForeignKey(StudentProfile, related_name='subject_results', on_delete=models.CASCADE)
 	subject = models.ForeignKey(Subject, related_name='student_scores', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, on_delete=models.CASCADE, null=True, blank=True)
-	
+
 	first_test = models.IntegerField(default=0)
 	second_test = models.IntegerField(default=0)
 	exam = models.IntegerField(default=0)
-
-	#timestamps
-	last_modified = models.DateTimeField(auto_now=True)
-	date_created = models.DateTimeField(auto_now_add=True)
 
 	def percentage(self):
 		return (self.first_test + self.second_test + self.exam) / 100

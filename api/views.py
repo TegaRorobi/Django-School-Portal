@@ -90,7 +90,7 @@ class AllMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
 	"Note: This viewset may not be applicable in the final application, it may be terminated "\
 	"as a superuser being able to view all user messages may have ethical issues."
 
-	queryset = Message.objects.prefetch_related('sender', 'receiver').order_by('-timestamp')
+	queryset = Message.objects.prefetch_related('sender', 'receiver').order_by('-date_created')
 	serializer_class = AllMessagesSerializer
 	permission_classes = [IsSuperUser]
 
@@ -137,7 +137,7 @@ class SentMessagesViewSet(viewsets.ModelViewSet):
 		return serializer.save(sender=self.request.user)
 	
 	def get_queryset(self):
-		return Message.objects.prefetch_related('receiver').filter(sender=self.request.user).order_by('-timestamp')
+		return Message.objects.prefetch_related('receiver').filter(sender=self.request.user).order_by('-date_created')
 
 
 
@@ -149,7 +149,7 @@ class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 	serializer_class = ReceivedMessageSerializer
 	permission_classes = [permissions.IsAuthenticated]
 	def get_queryset(self):
-		return Message.objects.prefetch_related('sender').filter(receiver=self.request.user).order_by('-timestamp')
+		return Message.objects.prefetch_related('sender').filter(receiver=self.request.user).order_by('-date_created')
 
 
 class TermsViewSet(
