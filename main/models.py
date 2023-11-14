@@ -6,6 +6,7 @@ UserModel = get_user_model()
 
 
 class Subject(models.Model):
+
 	label = models.CharField(max_length=100, null=False, blank=False)
 
 	def __str__(self):
@@ -95,8 +96,6 @@ class StudentProfile(models.Model):
 
 
 
-
-
 class AdminProfile(models.Model):
 
 	user = models.OneToOneField(UserModel, related_name='admin_profile', on_delete=models.CASCADE)
@@ -123,8 +122,8 @@ class AdminProfile(models.Model):
 
 
 
-
 class Message(models.Model):
+
 	sender = models.ForeignKey(UserModel, related_name='sent_messages', on_delete=models.CASCADE)
 	receiver = models.ForeignKey(UserModel, related_name='received_messages', on_delete=models.CASCADE)
 	content = models.TextField()
@@ -138,8 +137,14 @@ class Message(models.Model):
 		return f"{self.sender} -> {self.receiver}"
 
 
+
 class Term(models.Model):
-	LABEL_CHOICES = (('first', 'First'), ('second', 'Second'), ('third', 'Third'))
+
+	LABEL_CHOICES = [
+		('first', 'First'), 
+		('second', 'Second'), 
+		('third', 'Third')
+	]
 
 	label = models.CharField(max_length=6, choices=LABEL_CHOICES)
 	start_date = models.DateField()
@@ -152,7 +157,9 @@ class Term(models.Model):
 			f"{self.end_date.strftime('%a, %d %b %Y')}")
 
 
+
 class StudentTermReport(models.Model):
+
 	student = models.ForeignKey(StudentProfile, related_name='term_reports', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, related_name='term_reports', on_delete=models.CASCADE)
 	term = models.ForeignKey(Term, related_name='student_reports', on_delete=models.CASCADE)
@@ -171,11 +178,14 @@ class StudentTermReport(models.Model):
 		return total/num_results
 
 
+
 class SubjectResult(models.Model):
+
 	term_report = models.ForeignKey(StudentTermReport, related_name='results', on_delete=models.CASCADE, null=True, blank=True)
 	student = models.ForeignKey(StudentProfile, related_name='subject_results', on_delete=models.CASCADE)
 	subject = models.ForeignKey(Subject, related_name='student_scores', on_delete=models.CASCADE)
 	grade = models.ForeignKey(Grade, on_delete=models.CASCADE, null=True, blank=True)
+	
 	first_test = models.IntegerField(default=0)
 	second_test = models.IntegerField(default=0)
 	exam = models.IntegerField(default=0)
