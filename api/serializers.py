@@ -86,3 +86,11 @@ class SubjectResultSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SubjectResult
 		fields = '__all__'
+
+
+class StudentTermReportSerializer(serializers.ModelSerializer):
+	results = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+	class Meta:
+		model = StudentTermReport 
+		fields = '__all__'
