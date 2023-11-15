@@ -94,3 +94,12 @@ class StudentTermReportSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = StudentTermReport 
 		fields = '__all__'
+
+
+class SubjectResultSerializer(serializers.ModelSerializer):
+	student = serializers.ReadOnlyField(source='term_report.student.__str__')
+	grade = serializers.ReadOnlyField(source='term_report.grade.__str__')
+
+	class Meta:
+		model = SubjectResult
+		fields = '__all__'
