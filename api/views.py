@@ -162,3 +162,12 @@ class TermsViewSet(
 	queryset = Term.objects.all().order_by('-start_date')
 	serializer_class = TermSerializer
 	permission_classes = [IsSuperUserOrReadOnly]
+
+
+class StudentTermReportViewSet(viewsets.ModelViewSet):
+	
+	"API Viewset to list out, create, retrieve, update and delete student term reports."
+
+	queryset = StudentTermReport.objects.prefetch_related('results', 'student', 'grade', 'term').order_by('student__user__name', 'student__user__email')
+	serializer_class = StudentTermReportSerializer
+	permission_classes = [IsAdminOrTeacherOrSuperUser]

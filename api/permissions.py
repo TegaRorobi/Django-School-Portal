@@ -24,6 +24,13 @@ class IsAdminOrSuperUser(permissions.BasePermission):
 			(request.user.is_staff or request.user.is_superuser))
 
 
+class IsAdminOrTeacherOrSuperUser(permissions.BasePermission):
+	"Custom permission to check if a user is an admin (is_admin=True), teacher(is_teacher=True) or superuser"
+
+	def has_permission(self, request, view):
+		return bool(request.user and request.user.is_authenticated and 
+			(request.user.is_admin or request.user.is_teacher or request.user.is_staff or request.user.is_superuser))
+
 
 class IsAdminOrSuperUserOrReadOnly(permissions.BasePermission):
 	"Custom permission to grant edit access to only site admins or superusers otherwise read access."
