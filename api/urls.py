@@ -51,9 +51,11 @@ message_paths = (
 
 term_paths = (
     re_path('^terms/?$', TermsViewSet.as_view(LIST_CREATE), name='terms-list'),
-    re_path('^terms/(?P<pk>\d+)/?$', TermsViewSet.as_view(RETRIEVE_UPDATE), name='term-detail'),
-)
+    re_path('^terms/(?P<pk>\d+)/?$', TermsViewSet.as_view(RETRIEVE_UPDATE), name='term-detail'),)
 
+term_report_paths = (
+    re_path('^term-reports/?$', StudentTermReportViewSet.as_view(LIST_CREATE), name='term-reports-list'),
+    re_path('^term-reports/(?P<pk>\d+)/?$', StudentTermReportViewSet.as_view(RETRIEVE_UPDATE_DESTROY), name='term-report-detail'),)
 
 urlpatterns = [
     *auth_paths,
@@ -64,5 +66,6 @@ urlpatterns = [
     *subject_paths,
     *grade_paths,
     *message_paths,
-    *term_paths
+    *term_paths,
+    *term_report_paths,
 ]
