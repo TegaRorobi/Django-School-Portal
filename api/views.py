@@ -152,6 +152,7 @@ class ReceivedMessagesViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, 
 		return Message.objects.prefetch_related('sender').filter(receiver=self.request.user).order_by('-date_created')
 
 
+
 class TermsViewSet(
 	mixins.ListModelMixin, mixins.CreateModelMixin, 
 	mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
@@ -164,6 +165,7 @@ class TermsViewSet(
 	permission_classes = [IsSuperUserOrReadOnly]
 
 
+
 class StudentTermReportViewSet(viewsets.ModelViewSet):
 	
 	"API Viewset to list out, create, retrieve, update and delete student term reports."
@@ -171,3 +173,13 @@ class StudentTermReportViewSet(viewsets.ModelViewSet):
 	queryset = StudentTermReport.objects.prefetch_related('results', 'student', 'grade', 'term').order_by('student__user__name', 'student__user__email')
 	serializer_class = StudentTermReportSerializer
 	permission_classes = [IsAdminOrTeacherOrSuperUser]
+
+
+
+class SubjectResultViewSet(viewsets.ModelViewSet):
+
+	"API Viewset to list out, create retrieve, update and delete student subject results."
+
+	queryset = SubjectResult.objects.prefetch_related('subject', 'term_report').order_by('-date_created', '-last_modified')
+	serializer_class = SubjectResultSerializer 
+	permission_classes = [IsAdminOrSuperUser]
