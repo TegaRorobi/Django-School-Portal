@@ -165,9 +165,7 @@ class StudentTermReport(BaseModel):
 class SubjectResult(BaseModel):
 
 	term_report = models.ForeignKey(StudentTermReport, related_name='results', on_delete=models.CASCADE, null=True, blank=True)
-	student = models.ForeignKey(StudentProfile, related_name='subject_results', on_delete=models.CASCADE)
-	subject = models.ForeignKey(Subject, related_name='student_scores', on_delete=models.CASCADE)
-	grade = models.ForeignKey(Grade, on_delete=models.CASCADE, null=True, blank=True)
+	subject = models.ForeignKey(Subject, related_name='student_results', on_delete=models.CASCADE)
 
 	first_test = models.IntegerField(default=0)
 	second_test = models.IntegerField(default=0)
