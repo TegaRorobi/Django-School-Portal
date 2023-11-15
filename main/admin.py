@@ -7,7 +7,7 @@ admin.site.register(Grade)
 @admin.register(TeacherProfile)
 class TeacherProfileAdmin(admin.ModelAdmin):
 	model = TeacherProfile
-	list_display = ['user', 'qualifications', 'subject_specializations_', 'grades_']
+	list_display = 'user', 'qualifications', 'subject_specializations_', 'grades_'
 	
 	@admin.display()
 	def subject_specializations_(self, obj):
@@ -19,7 +19,7 @@ class TeacherProfileAdmin(admin.ModelAdmin):
 @admin.register(StudentProfile)
 class StudentProfileAdmin(admin.ModelAdmin):
 	model = StudentProfile
-	list_display = ['user', 'image', 'grade']
+	list_display = 'user', 'image', 'grade'
 
 	@admin.display()
 	def subjects_(self, obj):
@@ -28,9 +28,24 @@ class StudentProfileAdmin(admin.ModelAdmin):
 @admin.register(AdminProfile)
 class AdminprofileAdmin(admin.ModelAdmin):
 	model = AdminProfile 
-	list_display = ['user', 'image', 'position']
+	list_display = 'user', 'image', 'position'
 
 @admin.register(Term)
 class TermAdmin(admin.ModelAdmin):
 	model = Term 
-	list_display = ['label', 'start_date', 'end_date']
+	list_display = 'label', 'start_date', 'end_date'
+
+@admin.register(StudentTermReport)
+class StudentTermReportAdmin(admin.ModelAdmin):
+	model = StudentTermReport
+	list_display = 'student', 'grade', 'term', 'average', 'remark'
+
+
+@admin.register(SubjectResult)
+class SubjectResultAdmin(admin.ModelAdmin):
+	model = SubjectResult
+	list_display = 'student_', 'subject', 'term_report', 'first_test', 'second_test', 'exam', 'percentage'
+
+	@admin.display()
+	def student_(self, obj):
+		return str(obj.term_report.student)

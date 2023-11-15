@@ -139,7 +139,7 @@ class Term(BaseModel):
 
 	def __str__(self) -> str:
 		return (
-			f"{self.label.title()} term,"
+			f"{self.label.title()} term, "
 			f"{self.start_date.strftime('%a, %d %b %Y')} -> "
 			f"{self.end_date.strftime('%a, %d %b %Y')}")
 
@@ -158,9 +158,10 @@ class StudentTermReport(BaseModel):
 		for result in self.results.all():
 			total += result.percentage()
 			num_results += 1
-		else:
+		try:
+			return total/num_results
+		except ZeroDivisionError:
 			return 0
-		return total/num_results
 	
 	def __str__(self):
 		return f"{self.term.label.title()} term report for {self.student.__str__()}. {self.term.start_date} -> {self.term.end_date}"
