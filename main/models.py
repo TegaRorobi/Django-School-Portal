@@ -158,7 +158,12 @@ class StudentTermReport(BaseModel):
 		for result in self.results.all():
 			total += result.percentage()
 			num_results += 1
+		else:
+			return 0
 		return total/num_results
+	
+	def __str__(self):
+		return f"{self.term.label.title()} term report for {self.student.__str__()}. {self.term.start_date} -> {self.term.end_date}"
 
 
 
