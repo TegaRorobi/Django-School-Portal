@@ -53,21 +53,21 @@ class AllMessagesSerializer(serializers.ModelSerializer):
 	receiver = serializers.ReadOnlyField(source='receiver.__str__')
 	class Meta:
 		model = Message 
-		fields = ['id', 'content', 'sender', 'receiver', 'timestamp']
+		fields = ['id', 'content', 'sender', 'receiver', 'date_created']
 
 
 class SentMessageSerializer(serializers.ModelSerializer):
 	receiver_display = serializers.ReadOnlyField(source='receiver.__str__')
 	class Meta:
 		model = Message 
-		fields = ['id', 'content', 'receiver', 'receiver_display', 'timestamp']
+		fields = ['id', 'content', 'receiver', 'receiver_display', 'date_created']
 
 
 class ReceivedMessageSerializer(serializers.ModelSerializer):
 	sender_display = serializers.ReadOnlyField(source='sender.__str__')
 	class Meta:
 		model = Message 
-		fields = ['id', 'content', 'sender', 'sender_display', 'timestamp']
+		fields = ['id', 'content', 'sender', 'sender_display', 'date_created']
 
 
 class TermSerializer(serializers.ModelSerializer):
