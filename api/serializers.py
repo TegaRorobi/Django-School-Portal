@@ -9,28 +9,29 @@ class UserSerializer(serializers.ModelSerializer):
 	received_messages = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta:
 		model = UserModel
-		fields = [field.name for field in model._meta.fields] + ['sent_messages', 'received_messages']
+		fields = '__all__'
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
 	user_display = serializers.ReadOnlyField(source='user.__str__')
+	grade_display = serializers.ReadOnlyField(source='grade.__str__')
 	class Meta:
 		model = StudentProfile 
-		fields = [field.name for field in model._meta.fields] + ['subjects', 'user_display']
+		fields = '__all__'
 
 
 class TeacherProfileSerializer(serializers.ModelSerializer):
 	user_display = serializers.ReadOnlyField(source='user.__str__')
 	class Meta:
 		model = TeacherProfile 
-		fields = [field.name for field in model._meta.fields] + ['grades', 'subject_specializations', 'user_display']
+		fields = '__all__'
 
 
 class AdminProfileSerializer(serializers.ModelSerializer):
 	user_display = serializers.ReadOnlyField(source='user.__str__')
 	class Meta:
 		model = AdminProfile 
-		fields = [field.name for field in model._meta.fields] + ['user_display']
+		fields = '__all__'
 
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -45,7 +46,7 @@ class GradeSerializer(serializers.ModelSerializer):
 	teachers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta: 
 		model = Grade 
-		fields = ['id', 'label', 'subjects', 'students', 'teachers']
+		fields = '__all__'
 
 
 class AllMessagesSerializer(serializers.ModelSerializer):
@@ -53,21 +54,21 @@ class AllMessagesSerializer(serializers.ModelSerializer):
 	receiver = serializers.ReadOnlyField(source='receiver.__str__')
 	class Meta:
 		model = Message 
-		fields = ['id', 'content', 'sender', 'receiver', 'date_created']
+		fields = '__all__'
 
 
 class SentMessageSerializer(serializers.ModelSerializer):
 	receiver_display = serializers.ReadOnlyField(source='receiver.__str__')
 	class Meta:
 		model = Message 
-		fields = ['id', 'content', 'receiver', 'receiver_display', 'date_created']
+		fields = '__all__'
 
 
 class ReceivedMessageSerializer(serializers.ModelSerializer):
 	sender_display = serializers.ReadOnlyField(source='sender.__str__')
 	class Meta:
 		model = Message 
-		fields = ['id', 'content', 'sender', 'sender_display', 'date_created']
+		fields = '__all__'
 
 
 class TermSerializer(serializers.ModelSerializer):
