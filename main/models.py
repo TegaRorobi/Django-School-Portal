@@ -49,7 +49,6 @@ class TeacherProfile(BaseModel):
 
 	def save(self, *args, **kwargs):
 		if self.user.is_student:
-			# log an error message
 			raise IntegrityError("It is illegal to attach a teacher profile to a user object already attached to a student profile")
 		self.user.is_teacher = True
 		self.user.save()
@@ -67,22 +66,20 @@ class StudentProfile(BaseModel):
 	grade = models.ForeignKey(Grade, related_name='students', on_delete=models.PROTECT)
 	subjects = models.ManyToManyField(Subject, related_name='offering_students')
 	bio = models.TextField(_('Biography'), default='Student @ the school portal.')\
-	
+
 	def save(self, *args, **kwargs):
 		try:
 			if self.user.teacher_profile:
-				# log an error message
-				return
+				raise IntegrityError("Illegal Operation: The selected user object is already attached to a teacher profile")
 		except:
 			self.user.is_student = True
 			# making sure all selected subjects are offered by the selected grade.
 			# O(n) time complexity and O(n) space complexity, where n is the number of
 			# subjects offered by the grade which is fairly constant
-			# hashset = set([subject.label for subject in self.grade.subjects.all()])
-			# for subject in self.subjects.all():
-			# 	if subject.label not in hashset:
-			# 		# log an error message
-			# 		return
+			hashset = set(subject.label for subject in self.grade.subjects.all())
+			for subject in self.subjects.all():
+				if subject.label not in hashset:
+					raise IntegrityError(f"Subject {subject.label} is not offered by the selected grade: {self.grade}")
 			super().save(*args, **kwargs)
 
 	def __str__(self):
