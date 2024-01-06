@@ -8,47 +8,47 @@ UserModel = get_user_model()
 @admin.register(UserModel)
 class UserAdmin(admin.ModelAdmin):
 	model = UserModel
-	list_display = ('name', 'gender', 'username', 'is_superuser', 'is_student', 'is_teacher', 'is_admin', 'passkey')
+	list_display = ('name', 'gender', 'username', 'is_superuser', 'passkey')
 	exclude = ('first_name', 'last_name', 'email', 'groups', 'user_permissions', 'is_superuser', 'is_staff', 'is_active', 'date_joined', 'last_login')
 
-	@admin.action(description="Change selected users' account type to 'Admin'")
-	def update_account_admin(self, request, queryset):
-		updated = queryset.update(account_type='admin')
-		self.message_user(
-			request, 
-			ngettext(
-				f"{updated} user's account successfully changed to 'admin'",
-				f"{updated} users account successfully changed to 'admin'",
-				updated
-			),
-			messages.SUCCESS
-		)
+	# @admin.action(description="Change selected users' account type to 'Admin'")
+	# def update_account_admin(self, request, queryset):
+	# 	updated = queryset.update(account_type='admin')
+	# 	self.message_user(
+	# 		request, 
+	# 		ngettext(
+	# 			f"{updated} user's account successfully changed to 'admin'",
+	# 			f"{updated} users' account successfully changed to 'admin'",
+	# 			updated
+	# 		),
+	# 		messages.SUCCESS
+	# 	)
 
-	@admin.action(description="Change selected users' account type to 'Student'")
-	def update_account_student(self, request, queryset):
-		updated = queryset.update(account_type='student')
-		self.message_user(
-			request, 
-			ngettext(
-				f"{updated} user's account type successfully changed to 'student'",
-				f"{updated} users account type successfully changed to 'student'",
-				updated
-			),
-			messages.SUCCESS
-		)
+	# @admin.action(description="Change selected users' account type to 'Student'")
+	# def update_account_student(self, request, queryset):
+	# 	updated = queryset.update(account_type='student')
+	# 	self.message_user(
+	# 		request, 
+	# 		ngettext(
+	# 			f"{updated} user's account type successfully changed to 'student'",
+	# 			f"{updated} users' account type successfully changed to 'student'",
+	# 			updated
+	# 		),
+	# 		messages.SUCCESS
+	# 	)
 
-	@admin.action(description="Change selected users' account type to 'Educator'")
-	def update_account_educator(self, request, queryset):
-		updated = queryset.update(account_type='educator')
-		self.message_user(
-			request, 
-			ngettext(
-				f"{updated} user's account successfully changed to educator",
-				f"{updated} users account successfully changed to educator",
-				updated
-			),
-			messages.SUCCESS
-		)
+	# @admin.action(description="Change selected users' account type to 'Educator'")
+	# def update_account_educator(self, request, queryset):
+	# 	updated = queryset.update(account_type='educator')
+	# 	self.message_user(
+	# 		request, 
+	# 		ngettext(
+	# 			f"{updated} user's account successfully changed to educator",
+	# 			f"{updated} users' account successfully changed to educator",
+	# 			updated
+	# 		),
+	# 		messages.SUCCESS
+	# 	)
 
-	actions=['update_account_admin', 'update_account_student', 'update_account_educator']
+	# actions=['update_account_admin', 'update_account_student', 'update_account_educator']
 
