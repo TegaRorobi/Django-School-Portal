@@ -48,10 +48,8 @@ class TeacherProfile(BaseModel):
 	subject_specializations = models.ManyToManyField(Subject, related_name='specialized_teachers')
 
 	def save(self, *args, **kwargs):
-		if self.user.is_student:
+		if hasattr(self.user, 'student_profile'):
 			raise IntegrityError("It is illegal to attach a teacher profile to a user object already attached to a student profile")
-		self.user.is_teacher = True
-		self.user.save()
 		super().save(*args, **kwargs)
 
 	def __str__(self):
@@ -65,22 +63,25 @@ class StudentProfile(BaseModel):
 	image = models.ImageField(upload_to='images/student_profiles', null=True, blank=True)
 	grade = models.ForeignKey(Grade, related_name='students', on_delete=models.PROTECT)
 	subjects = models.ManyToManyField(Subject, related_name='offering_students')
-	bio = models.TextField(_('Biography'), default='Student @ the school portal.')\
+	bio = models.TextField(_('Biography'), default='Student @ the school portal.')
+
+	@property
+	def subjects_display(self):
+		return [subject.__str__() for subject in self.subjects.all()]
 
 	def save(self, *args, **kwargs):
-		try:
-			if self.user.teacher_profile:
-				raise IntegrityError("Illegal Operation: The selected user object is already attached to a teacher profile")
-		except:
-			self.user.is_student = True
-			# making sure all selected subjects are offered by the selected grade.
-			# O(n) time complexity and O(n) space complexity, where n is the number of
-			# subjects offered by the grade which is fairly constant
-			hashset = set(subject.label for subject in self.grade.subjects.all())
-			for subject in self.subjects.all():
-				if subject.label not in hashset:
-					raise IntegrityError(f"Subject {subject.label} is not offered by the selected grade: {self.grade}")
-			super().save(*args, **kwargs)
+		if hasattr(self.user, 'teacher_profile'):
+			raise IntegrityError("It is illegal to attach an student profile to a user object already attached to a teacher profile")
+		if hasattr(self.user, 'admin_profile'):
+			raise IntegrityError("It is illegal to attach an student profile to a user object already attached to an admin profile")
+		# making sure all selected subjects are offered by the selected grade.
+		# O(n) time complexity and O(n) space complexity, where n is the number of
+		# subjects offered by the grade which is fairly constant
+		hashset = set(subject.label for subject in self.grade.subjects.all())
+		for subject in self.subjects.all():
+			if subject.label not in hashset:
+				raise IntegrityError(f"Subject {subject.label} is not offered by the selected grade: {self.grade}")
+		super().save(*args, **kwargs)
 
 	def __str__(self):
 		return str(self.user)
@@ -96,8 +97,7 @@ class AdminProfile(BaseModel):
 	position = models.CharField(max_length=300, null=True, blank=True)
 
 	def save(self, *args, **kwargs):
-		if self.user.is_student:
-			# log an error message
+		if hasattr(self.user, 'student_profile'):
 			raise IntegrityError("It is illegal to attach an admin profile to a user object already attached to a student profile")
 		self.user.is_admin = True
 		self.user.save()
