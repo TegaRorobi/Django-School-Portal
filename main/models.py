@@ -18,18 +18,7 @@ class Subject(BaseModel):
 
 class Grade(BaseModel):
 
-	GRADE_LABEL_CHOICES = [
-		('Kindergarten 1', 'Kindergarten 1'),
-		('Kindergarten 2', 'Kindergarten 2'),
-		('Nursery 1', 'Nursery 1'),
-		('Nursery 2', 'Nursery 2'),
-		('Primary 1', 'Primary 1'),
-		('Primary 2', 'Primary 2'),
-		('Primary 3', 'Primary 3'),
-		('Primary 4', 'Primary 4'),
-		('Primary 5', 'Primary 5'),
-	]
-	label = models.CharField(max_length=15,choices=GRADE_LABEL_CHOICES)
+	label = models.CharField(max_length=50)
 	subjects = models.ManyToManyField(Subject, related_name='grades_taught_in')
 
 	def __str__(self):
