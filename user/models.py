@@ -70,9 +70,6 @@ class User(AbstractUser):
 	address = models.CharField(_('House Address'), max_length=200, null=True)
 	phone = models.CharField(_('Phone Number'), max_length=14, null=True, validators=[PHONE_NUMBER_VALIDATOR])
 	passkey = models.CharField(max_length=13, unique=True, blank=True, editable=False)
-	is_student = models.BooleanField(default=True)
-	is_teacher = models.BooleanField(default=False)
-	is_admin = models.BooleanField(default=False)
 
 	username = None
 
