@@ -6,9 +6,12 @@ import random
 
 
 class CustomUserManager(UserManager):
-	def _create_user(self, username, email, password, **extra_fields):
+	def create_user(self, email, password, **extra_fields):
+		extra_fields.setdefault("is_staff", False)
+		extra_fields.setdefault("is_superuser", False)
+
 		if not email:
-			raise ValueError("The given username must be set")
+			raise ValueError("Email must be set.")
 
 		email = self.normalize_email(email)
 		user = self.model(email=email, **extra_fields)
@@ -19,28 +22,21 @@ class CustomUserManager(UserManager):
 				user.passkey = self.model.generate_passkey(None, "IHEMCNPS-", 4)
 				user.save(using=self._db)
 				break
-			except IntegrityError as e:
+			except IntegrityError:
 				pass
 		return user
 
-	def create_user(self, username=None, email=None, password=None, **extra_fields):
-		extra_fields.setdefault("is_staff", False)
-		extra_fields.setdefault("is_superuser", False)
-
-		is_admin = extra_fields.get('is_admin', False)
-		is_teacher = extra_fields.get('is_teacher', False)
-		is_student = extra_fields.get('is_student', False)
-
-		if is_admin + is_student + is_teacher > 1 and is_student:
-			raise IntegrityError("A user account marked as 'student' cannot be attached to any other profile.")
-		
-		if is_admin + is_student + is_teacher == 0:
-			raise IntegrityError("Unknown type for user account, please select one of: 'is_admin', 'is_student', 'is_teacher'")
-		
-		return self._create_user(username=username, email=email, password=password, **extra_fields)
 
 	def create_superuser(self, email=None, password=None, **extra_fields):
-		return super().create_superuser(username=None, email=email, password=password, **extra_fields)
+		extra_fields.setdefault("is_staff", True)
+		extra_fields.setdefault("is_superuser", True)
+
+		if extra_fields.get("is_staff") is not True:
+			raise ValueError("Superuser must have is_staff=True.")
+		if extra_fields.get("is_superuser") is not True:
+			raise ValueError("Superuser must have is_superuser=True.")
+
+		return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractUser):
