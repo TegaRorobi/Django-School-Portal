@@ -11,3 +11,4 @@ api/migrations/__pycache__/
 user/migrations/__pycache__/
 
 *.pyc
+*.log
