@@ -5,40 +5,66 @@ from main.models import *
 UserModel = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
-	sent_messages = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-	received_messages = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+	# sent_messages = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+	# received_messages = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta:
 		model = UserModel
 		fields = '__all__'
 
+class UserSubSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = UserModel
+		fields = 'id', 'name', 'email'
+
+
+class GradeSubSerializer(serializers.ModelSerializer):
+	class Meta: 
+		model = Grade 
+		fields = 'id', 'label'
+
+
+class SubjectSubSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Subject
+		fields = 'id', 'label'
+
 
 class StudentProfileSerializer(serializers.ModelSerializer):
-	user_display = serializers.ReadOnlyField(source='user.__str__')
-	grade_display = serializers.ReadOnlyField(source='grade.__str__')
+	user_ = UserSubSerializer(source='user', required=False, read_only=True)
+	grade_ = GradeSubSerializer(source='grade', required=False, read_only=True)
+	subjects_ = SubjectSubSerializer(source='subjects', required=False, many=True, read_only=True)
 	class Meta:
 		model = StudentProfile 
 		fields = '__all__'
+		extra_kwargs = {
+			'user': {'write_only':True, 'required':True},
+			'grade': {'write_only':True, 'required':True},
+			'subjects': {'write_only':True, 'required':True},
+		}
 
 
 class TeacherProfileSerializer(serializers.ModelSerializer):
-	user_display = serializers.ReadOnlyField(source='user.__str__')
+	user_ = UserSubSerializer(source='user', read_only=True)
+	grades_ = GradeSubSerializer(source='grades', many=True, read_only=True)
+	subject_specializations_ = SubjectSubSerializer(source='subject_specializations', many=True, read_only=True)
 	class Meta:
-		model = TeacherProfile 
+		model = TeacherProfile
 		fields = '__all__'
+		extra_kwargs = {
+			'user': {'write_only':True},
+			'grades': {'write_only':True},
+			'subject_specializations': {'write_only':True},
+		}
 
 
 class AdminProfileSerializer(serializers.ModelSerializer):
-	user_display = serializers.ReadOnlyField(source='user.__str__')
+	user_ = UserSubSerializer(source='user', many=False, read_only=True)
 	class Meta:
 		model = AdminProfile 
 		fields = '__all__'
-
-
-class SubjectSerializer(serializers.ModelSerializer):
-	grades_taught_in = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-	class Meta:
-		model = Subject 
-		fields = '__all__'
+		extra_kwargs = {
+			'user': {'write_only':True},
+		}
 
 
 class GradeSerializer(serializers.ModelSerializer):
@@ -46,6 +72,13 @@ class GradeSerializer(serializers.ModelSerializer):
 	teachers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 	class Meta: 
 		model = Grade 
+		fields = '__all__'
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+	grades_taught_in = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+	class Meta:
+		model = Subject 
 		fields = '__all__'
 
 
@@ -80,12 +113,6 @@ class TermSerializer(serializers.ModelSerializer):
 class StudentTermReportSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = StudentTermReport
-		fields = '__all__'
-
-
-class SubjectResultSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = SubjectResult
 		fields = '__all__'
 
 
